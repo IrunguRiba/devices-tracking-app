@@ -16,7 +16,7 @@ export class LocationService  {
 
   private socket: Socket;
   constructor(private mainService: MainService) { 
-    this.socket = io('http://localhost:4000');
+    this.socket = io('https://tracking-app-3.onrender.com/');
   } 
   
   protected map=signal("Waiting for user Location");

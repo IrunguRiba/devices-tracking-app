@@ -9,7 +9,7 @@ import { NewDevice } from './interfaces/newDevice';
   providedIn: 'root'
 })
 export class MainService {
-  private globalUrl='http://localhost:4000/api/getUser';
+  private globalUrl='https://tracking-app-3.onrender.com/api/getUser';
   
   constructor(private http: HttpClient){}
 
@@ -22,12 +22,12 @@ export class MainService {
 addNewDevice(device:NewDevice): Observable<NewDevice> {
   console.log("Adding new device:", device);
 
-  const addDeviceUrl = 'http://localhost:4000/api/devices/registerMyDevice';
+  const addDeviceUrl = 'https://tracking-app-3.onrender.com/api/devices/registerMyDevice';
   return this.http.post<NewDevice>(addDeviceUrl, device);
 }
 
 getUserDataByPin(pin: string): Observable<User> {
-  const getUserByPinUrl = `http://localhost:4000/api/getUserByPin/${pin}`;
+  const getUserByPinUrl = `https://tracking-app-3.onrender.com/api/getUserByPin/${pin}`;
   return this.http.get<User>(getUserByPinUrl);
 }
 }
