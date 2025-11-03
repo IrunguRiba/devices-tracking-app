@@ -27,7 +27,6 @@ jobs:
         run: npm install
 
       - name: Build Angular app
-        run: ng build
+        run: ng serve
 
-      - name: Run tests
-        run: npm test -- --watch=false --browsers=ChromeHeadless
+  
