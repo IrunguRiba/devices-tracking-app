@@ -5,12 +5,12 @@
     overflow: hidden;
         margin: 0;
         height: 100vh;
-        background: radial-gradient(
+       background: radial-gradient(
             circle at 50% 30%,
-            rgba(68, 3, 3, 0.9) 10%,
-            rgba(26, 0, 0, 0.95) 40%,
-            rgb(19, 18, 18) 70%
+            rgba(23, 23, 139, 0.95) 40%, 
+            rgb(31, 31, 34) 70%   
           );
+
 
         backdrop-filter: blur(3px);
       }

@@ -30,6 +30,7 @@
     "@angular/material": "^20.2.10",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@fingerprintjs/fingerprintjs": "^5.0.1",
     "@sweetalert2/ngx-sweetalert2": "^14.0.1",
     "@types/geojson": "^7946.0.16",
     "@types/leaflet": "^1.9.21",

@@ -12,10 +12,9 @@ templateUrl: './main.html',
   styleUrl: './main.css'
 })
 export class Main implements OnInit{
-
+  profilePic = '/user.png';
 dashPic='/dashboard.png';
 notificationPic='/message.png';
-addPic='/add.png';
 devicePic='/responsive.png';
 
 user!:User

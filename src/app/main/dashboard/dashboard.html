@@ -1,62 +1,75 @@
+<div *ngIf="!showTrackSection" class="dashboard-container">
 
-
-<div class="userProfile" [class.expanded]="expandProfile" (click)="onClickProfile()">
-  <img [src]="profilePic" alt="Profile" class="profile-pic" />
-  <div class="profile-details" *ngIf="expandProfile">
-    <h3>First Name: {{ user.firstName }} <br>Last Name: {{ user.lastName }}</h3>
-    <p>Email: {{ user.email }}</p>
-    <p>My Location: {{ latestLocation }}  
-      <a>
-
-        <img [src]="locationPic" class="locationPic" alt="Live" (click)="goToUserLocation()"> 
-      </a>
-    </p>
-    <p>PIN: {{user.pin}}</p>
+  <!-- Active Devices -->
+  <div class="stat-card stat-active">
+    <div class="stat-content">
+      <span class="stat-title">
+        <strong>I-TRACK</strong> lets you track multiple devices in real-time.<br>
+        Monitor devices reliably and accurately.<br>
+        <em>Active Devices</em>
+      </span>
+    </div>
+    <a (click)="goToDevices()">
+      <img [src]="sharePic" alt="Active Devices" class="stat-icon">
+    </a>
+    <span class="stat-value">{{ numberOfDevices }}</span>
   </div>
-</div>
 
-<button class="track-btn" (click)="showPinInput = !showPinInput">Track Device</button>
-
-<div class="pin-input-container" *ngIf="showPinInput">
-  <div class="pin-boxes">
-    <input maxlength="1" type="text"  class="pin-box" *ngFor="let box of [0, 1, 2, 3, 4, 5]; let i = index" (input)="updatePin($event, i)" (keydown)="movePrev($event)" />
+  <!-- Advanced Features -->
+  <div class="stat-card stat-advanced">
+    <div class="stat-content">
+      <span class="stat-title">
+        <strong>NEW!</strong> Track another device using a PIN.<br>
+        The device does not have to be your own.<br>
+        <em>Advanced Features</em>
+      </span>
+    </div>
+    <a (click)="openAdvancedTracking()">
+      <img [src]="sharePic" alt="Advanced Features" class="stat-icon">
+    </a>
   </div>
- 
-</div>
-<button id="enterBtn" (click)="onEnterPin()" *ngIf="showPinInput">Enter</button>
 
-
-<div *ngIf="statusMessage" class="status-message" [ngClass]="statusType">
-  {{ statusMessage }}
 </div>
 
-
-<div class="dashboard-container" *ngIf="user">
-  <div class="loader"></div>
+<!-- User Location -->
+<div class="myLocation" *ngIf="!showTrackSection">
+  <p><strong>Longitude:</strong> 12.6566666 &nbsp; <strong>Latitude:</strong> 36.3454555</p>
+  <div><strong>Time:</strong> Sunday 12:01:48</div>
 </div>
 
 
 
-<div class="trackingDevicesContainer" *ngIf="trackingDevices.length > 0; " >
-  <h2 class="liveDevices">Live Location</h2>
-  
-  
+<div *ngIf="showTrackSection" class="track-section">
+  <button class="back-btn" (click)="showTrackSection = false">Close</button>
+
+  <div class="pin-input-container">
+    <div class="pin-boxes">
+      <input
+        maxlength="1"
+        type="text"
+        class="pin-box"
+        *ngFor="let box of pinBoxes; let i = index"
+        [value]="pinBoxes[i]"
+        (input)="updatePin($event, i)"
+        (keydown)="movePrev($event)"
+      />
+    </div>
+    <button id="enterBtn" (click)="onEnterPin()">Enter</button>
+  </div>
+
+  <div class="trackingDevicesContainer" *ngIf="trackingDevices.length > 0">
+    <h2 class="liveDevices">Live Location</h2>
     <div *ngFor="let t of trackingDevices" class="tracked-user">
-      <ng-container *ngIf="t.LatestLocation && t.LatestLocation.length > 0; else noLocation ">
-        <p>{{ t.User.userName }} — Location: {{ t.LatestLocation[0].location }}
-        <a>
-            <img [src]="locationPic" class="locationPic" alt="Live"> 
-          </a>
+      <ng-container *ngIf="t.LatestLocation?.length; else noLocation">
+        <p>
+          {{ t.User.userName }} — Location: {{ t.LatestLocation[0].location }}
+          <img [src]="locationPic" class="locationPic" alt="Live">
         </p>
         <hr class="location-divider">
       </ng-container>
-  
       <ng-template #noLocation>
-        <p class="no-location">
-          {{ t.User.userName }} has no location available
-
-        </p>
-        <hr class="location-divider">
+        <p class="no-location">{{ t.User.userName }} has no location available</p>
       </ng-template>
+    </div>
   </div>
- </div>
+</div>

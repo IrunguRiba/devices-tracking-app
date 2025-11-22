@@ -51,8 +51,6 @@ export class LocationService  {
 
 
 watchLocationOnInit(_id:string):void{
-
-  
  const storedUser=localStorage.getItem('user')!
  console.log(localStorage.getItem('user'));
 

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs'
 import { User } from './interfaces/user';
 import { Device } from './interfaces/device';
 import { NewDevice } from './interfaces/newDevice';
+import { Socket } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
@@ -30,4 +31,5 @@ getUserDataByPin(pin: string): Observable<User> {
   const getUserByPinUrl = `https://tracking-app-3.onrender.com/api/getUserByPin/${pin}`;
   return this.http.get<User>(getUserByPinUrl);
 }
+
 }

@@ -1,0 +1,171 @@
+.signInForm {
+    margin: 80px auto;
+    padding: 40px 30px;
+    border-radius: 20px;
+    color: #aaaac4;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 1s ease forwards;
+  }
+  .sign-in-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+  
+  .create-account-btn {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #fff;
+    background: rgba(7, 151, 91, 0.1);
+    padding: 10px 24px;
+    border-radius: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .create-account-btn:hover {
+    background: rgba(92, 99, 4, 0.2);
+    transform: scale(1.05);
+  }
+  .form-title {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .input-group {
+    position: relative;
+    margin-bottom: 35px;
+  }
+  
+  .input-group input {
+    width: 90%;
+    padding: 12px 10px;
+    border: none;
+    border-bottom: 2px solid #555;
+    background: transparent;
+    color: #fff;
+    outline: none;
+    font-size: 15px;
+    transition: 0.3s;
+  }
+  
+  .input-group label {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    color: #aaa;
+    font-size: 15px;
+    pointer-events: none;
+    transition: 0.3s ease all;
+  }
+  
+  .input-group input:focus ~ label,
+  .input-group input:valid ~ label {
+    top: -10px;
+    left: 5px;
+    font-size: 13px;
+    color: #f0f0f0;
+  }
+  
+  .input-group input:focus {
+    border-color: #030303;
+    box-shadow: 0 0 10px #070707;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background: #91919e;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+  background: linear-gradient(120deg, #080953, #0e023b, #1c0cad, #2909df);
+    box-shadow: 0 0 10px rgba(23, 24, 24, 0.5);
+  }
+  
+  .submit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(23, 24, 24, 0.5);
+  }
+  
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #666, transparent);
+    margin: 30px 0;
+    opacity: 0.6;
+  }
+  .social-login {
+    text-align: center;
+    animation: fadeInUp 1s ease forwards;
+  }
+  
+  .continue-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 0 8px rgba(255,255,255,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .continue-inline:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255,255,255,0.2);
+  }
+  
+  .continue-text {
+    color: #ddd;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .google-icon {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+    margin-bottom: 3px;
+  }
+  
+  .continue-inline:hover .google-icon {
+    transform: rotate(10deg);
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(25px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

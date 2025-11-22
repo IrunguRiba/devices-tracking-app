@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   font-family: "Poppins", sans-serif;
-  margin-top: 16%;
+  margin-top: 4%;
   color: #e2dfd7;
   text-align: center;
   animation: fadeIn 1.5s ease-out;
@@ -20,7 +20,7 @@
   animation: shimmerPulse 4s ease-in-out infinite;
 }
 .greet-line1 {
-  margin-top: 20%;
+  margin-top: 4%;
   font-size: clamp(1.2rem, 2vw + 0.8rem, 1.9rem);
   font-weight: 600;
   letter-spacing: 0.6px;
@@ -64,29 +64,22 @@
   }
 }
 
-
 #nav-container {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   position: fixed;
-  bottom: 20px;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 100%;
-  height: 370px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  border-radius: 30px;
+  max-width: 600px;
   z-index: 1000;
 }
 
 #nav-container ul {
-  background: linear-gradient(145deg, #231f1f, #2e2626, #3a3030);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(160, 140, 130, 0.15); /* faint bronze tone */
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 50px;
+  bottom: 20px;
   height: 30px;
   width: 80%;
   gap: 30px;
@@ -107,6 +100,7 @@
 }
 
 #nav-container a {
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,26 +115,18 @@
 #nav-container img {
   margin-bottom: 10px;
   margin-top: 13px;
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 30px;
   opacity: 0.85;
   filter: brightness(0.8) contrast(0.9);
   transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
 }
 
-#nav-container a:hover img {
-  transform: translateY(-4px) scale(1.08);
-  filter: brightness(1);
-  opacity: 1;
-}
+
 .active-link {
-  color: #f2ede7;
-  background: linear-gradient(160deg, #2a2222, #3a2f2e);
-  border: 1px solid rgba(180, 160, 150, 0.2);
-  position: relative;
   transform: translateY(-4px);
   transition: all 0.3s ease;
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8),
+  box-shadow: inset 0 0 12px rgba(24, 23, 23, 0.8),
               0 4px 15px rgba(0, 0, 0, 0.6);
   border-radius: 18px;
   padding: 10px 12px;
@@ -151,18 +137,6 @@
   filter: brightness(1.1) contrast(1);
   opacity: 1;
 }
-
-@keyframes darkPulse {
-  0%, 100% {
-    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8),
-                0 4px 15px rgba(0, 0, 0, 0.6);
-  }
-  50% {
-    box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.9),
-                0 5px 18px rgba(0, 0, 0, 0.7);
-  }
-}
-
 .active-link {
   animation: darkPulse 3s infinite ease-in-out;
 }
@@ -187,3 +161,48 @@ router-outlet ~ * {
   animation: appleTransition 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, opacity, filter;
 }
+
+.nav-divider {
+  width: 100%;
+  margin: 14px auto 0 auto;
+  height: 1px;
+  border: none;
+  background: #44403c;
+  opacity: 0.9;
+
+}
+
+/* From Uiverse.io by Jedi-hongbin */ 
+button {
+ margin-top: 7%;
+ margin-left: 1%;
+  display: flex;
+  height: 3em;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+ }
+ 
+ button > svg {
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 20px;
+  transition: all 0.4s ease-in;
+ }
+ 
+ button:hover > svg {
+  font-size: 1.2em;
+  transform: translateX(-5px);
+ }
+ 
+ button:hover {
+  box-shadow: 9px 9px 33px #07055e, -9px -9px 33px #261da3;
+  transform: translateY(-2px);
+ }

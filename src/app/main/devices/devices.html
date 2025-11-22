@@ -1,45 +1,76 @@
-<div class="devices-wrapper" *ngIf="trackingDevices.length > 0; else noDevices">
-  <div class="device-wrapper" *ngFor="let device of trackingDevices">
-    <div class="device-card">
-      <div class="device-header">
-        <h3>{{ device.User.deviceInfo.name }}</h3>
-        <p><strong>Type:</strong> {{ device.User.deviceInfo.type }}</p>
-        <p><strong>Model:</strong> {{ device.User.deviceInfo.model }}</p>
-        <p><strong>Description:</strong> {{ device.User.deviceInfo.description }}</p>
-
-        <ng-container *ngIf="device.LatestLocation && device.LatestLocation.length > 0; else noLocation">
-          <p>
-           <strong>Location:</strong> Lat: {{ device.LatestLocation[0].latitude }}, Lon:
-          {{ device.LatestLocation[0].longitude }}
-       </p>
-        </ng-container>
-
-        <ng-template #noLocation>
-          <p><strong>Location:</strong> Not available</p>
-        </ng-template>
-
-        <p class="active">
-          <strong>Status:</strong>
-          {{ device.User.deviceInfo.status || 'active' }}
-        </p>
-
-        <div
-          class="activeDevice"
-          *ngIf="device.User.deviceInfo.status === 'active'; else deviceIsLost">
-        </div>
-      </div>
-
-      <div class="location-overlay">
-        <button class="go-location-btn" (click)="goToLocation()">Go to Location</button>
+<div class="device-button-wrapper" *ngIf="!isAddDeviceFormOpen">
+  <button class="openDeviceFormBtn" (click)="openAddDeviceForm()"> 
+    <div class="svg-wrapper-1">
+      <div class="svg-wrapper"> 
+        <img [src]="addPic" id="AddDeviceimg"> 
       </div>
     </div>
-  </div>
+    <span>New Device</span>
+  </button>
+
+  <button class="openDeviceFormBtn" (click)="openEditDeviceForm()"> 
+    <div class="svg-wrapper-1">
+      <div class="svg-wrapper"> 
+        <img [src]="editPic" id="AddDeviceimg"> 
+      </div>
+    </div>
+    <span>Edit Device Info</span>
+  </button>
 </div>
 
-<ng-template #noDevices>
-  <p>No devices found in storage.</p>
-</ng-template>
+<div *ngIf="!isAddDeviceFormOpen">
+  <hr class="nav-divider" (click)="openAddDeviceForm()">
+  <h2 id="myDevices">My Devices</h2>
+</div>
 
-<ng-template #deviceIsLost>
-  <div class="inactiveDevice">Device Lost</div>
-</ng-template>
+  <div class="container" *ngIf="!isAddDeviceFormOpen">
+    <div class="data">
+      <p>Iphone 12 pro max</p>
+    </div>
+  
+    <div class="card">
+      <span class="active-text">
+        ACTIVE
+        <br>
+      Location
+        <img [src]="sharePic" alt="Active Devices" class="stat-icon">
+      </span>
+
+   
+    </div>
+    <p><strong>[</strong> 12.6566666 &nbsp; <strong> </strong> 36.3454555]</p>
+<h5> Sunday 12:01:48</h5>
+  </div>
+  
+  <hr class="nav-divider">
+
+<form class="addDeviceForm" [formGroup]="registerNewDeviceForm" (ngSubmit)="onRegisterNewDevice()" *ngIf="isAddDeviceFormOpen">
+  <p>New Device Information</p>
+
+  <div class="input-group">
+    <input id="deviceName" type="text" formControlName="name" />
+    <label for="deviceName">Device Name</label>
+  </div>
+
+  <div class="input-group">
+    <input id="deviceType" type="text" formControlName="type" />
+    <label for="deviceType">Type</label>
+  </div>
+
+  <div class="input-group">
+    <input id="deviceModel" type="text" formControlName="model" />
+    <label for="deviceModel">Model</label>
+  </div>
+
+  <div class="input-group">
+    <input id="deviceDescription" type="text" formControlName="description" />
+    <label for="deviceDescription">Description</label>
+  </div>
+
+  <div class="input-group">
+    <input id="deviceUser" type="text" formControlName="userId" />
+    <label for="deviceUser">User</label>
+  </div>
+
+  <button id="addBtn" type="submit" [disabled]="!registerNewDeviceForm.valid">Add Device Info</button>
+</form>

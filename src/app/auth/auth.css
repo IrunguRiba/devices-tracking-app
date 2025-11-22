@@ -59,10 +59,13 @@
   padding: 12px;
   border: none;
   border-radius: 25px;
+  background: #91919e;
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
+  color: #fff;
+background: linear-gradient(120deg, #080953, #0e023b, #1c0cad, #2909df);
   box-shadow: 0 0 10px rgba(23, 24, 24, 0.5);
 }
 

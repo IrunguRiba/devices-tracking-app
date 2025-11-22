@@ -1,19 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-home',
+  selector: 'app-about',
   imports: [],
-  templateUrl: './home.html',
-  styleUrls: ['./home.css']
+  templateUrl: './about.html',
+  styleUrl: './about.css'
 })
-export class Home {
-
+export class About {
   constructor(private router: Router) {}
 
-  goToAbout() {
-    this.router.navigate(['/about']);
+  goToAuth(){
+    this.router.navigate(['/sign-in']);
     console.log('Home button clicked');
   }
 

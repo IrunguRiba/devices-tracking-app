@@ -1,0 +1,23 @@
+.navigationContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    height: 60px;
+    width: 90%;
+}
+#freeTrialBtn {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 12px 26px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 10px;
+    margin-left: auto;
+    transition: 0.3s ease;
+}
+
+#freeTrialBtn:hover {
+    background: rgba(11, 4, 78, 0.28);
+}

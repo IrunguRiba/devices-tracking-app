@@ -14,8 +14,6 @@ templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class Dashboard implements OnInit {
-  statusMessage: string = '';
-statusType: 'error' | 'info' | '' = '';
 latestLocation:any | null=null;
 userLatestLocation:Location | null=null;
   locationPic='/location.png';
@@ -24,19 +22,17 @@ userLatestLocation:Location | null=null;
   pin: string = '';
   pinBoxes: string[] = ['', '', '', '', '', ''];
   expandProfile: boolean = false;
-
-  onClickProfile(): void {
-    this.expandProfile = !this.expandProfile;
-  }
   numberOfDevices: Number = 0;
   user!: User;
   location: any;
-
+sharePic='/share.png';
+showTrackSection = false;
   constructor(private mainService: MainService, private locationService: LocationService, private router:Router) {}
  
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId')!; // ! used since The user id MUST be there after signin and that it will be passed
+
     this.onGetDashInformation(userId);
 
     this.locationService.watchLocationOnInit(userId)
@@ -95,9 +91,7 @@ userLatestLocation:Location | null=null;
   onEnterPin(){
     if (this.pin.length !== 6) {
       console.warn('Please enter a valid 6-digit PIN');
-      this.statusMessage = '';
-      this.statusType = '';
-     
+    
       return;
     }
   this.mainService.getUserDataByPin(this.pin).subscribe({
@@ -114,11 +108,6 @@ userLatestLocation:Location | null=null;
       );
       if (existingUser) {
         console.log(`User ${user.User.userName} already tracked:, `);
-        this.statusMessage = `User ${user.User.userName} already added for tracking`;
-        setTimeout(() => {
-          this.statusMessage = '';
-        }, 2000); 
-       
         return;
         
       } else {
@@ -130,11 +119,6 @@ userLatestLocation:Location | null=null;
       }
           },
    error: (error:any)=>{
-    this.statusMessage = 'Error fetching user data. wrong PIN?';
-    setTimeout(() => {
-      this.statusMessage = '';
-    }, 2000); 
-   
     console.log("Error fetching user", error)
 
   
@@ -145,12 +129,13 @@ userLatestLocation:Location | null=null;
     }
 
 })
-  }
+ 
+}
 
-  goToUserLocation() {
-    this.router.navigate(['/map']);
-    console.log('Map button clicked');
-
-  }
-  
+openAdvancedTracking(){
+  this.showTrackSection = !this.showTrackSection;
+}
+goToDevices(){
+  this.router.navigate(['/main/devices']);
+}
 }
