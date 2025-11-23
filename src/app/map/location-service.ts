@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../main/interfaces/user';
+import {Device } from '../main/interfaces/device';
 import {Observable} from 'rxjs'
 import { MainService } from './../main/main-service';
 
@@ -15,14 +15,17 @@ export class LocationService  {
  
 
   private socket: Socket;
-  constructor(private mainService: MainService) { 
+  constructor(private http:HttpClient, private mainService: MainService) { 
     this.socket = io('https://tracking-app-3.onrender.com/');
   } 
   
   protected map=signal("Waiting for user Location");
 
 
- 
+ getLocation(device:Device ):Observable<Device>{
+  console.log("Getting Location from Service",);
+  return this.http.get<Device>(`https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`);
+ }
 
 
 // getCurrentLocation():void{

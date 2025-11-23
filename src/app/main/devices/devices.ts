@@ -4,11 +4,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { NewDevice } from '../interfaces/newDevice';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-devices',
   imports: [CommonModule, ReactiveFormsModule],
-
   templateUrl: './devices.html',
   styleUrl: './devices.css',
 })
@@ -18,12 +18,13 @@ export class Devices implements OnInit {
   sharePic='/share.png';
   addPic='/add.png';
   editPic='/edit.png';
+  phoneImage='/phoneImage.png';
+  upload='/upload.png';
   hideButton: boolean = false;
+  imageSrc: string | null = null;
 
-  openAddDeviceForm() {
-    this.isAddDeviceFormOpen = true;
-  }
- 
+  
+
 
   
   device?: NewDevice;
@@ -35,7 +36,9 @@ export class Devices implements OnInit {
   // userId:      string;
 
   registerNewDeviceForm: FormGroup;
-  constructor(private mainService: MainService, private formBuilder: FormBuilder) {
+  constructor(private mainService: MainService, private formBuilder: FormBuilder, private router:Router) {
+    this.imageSrc = localStorage.getItem('profilePic');
+
     this.registerNewDeviceForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       type: ['', [Validators.required, Validators.minLength(3)]],
@@ -52,6 +55,23 @@ export class Devices implements OnInit {
       this.registerNewDeviceForm.patchValue({ userId });
     }
   }
+  
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageSrc = reader.result as string;
+      localStorage.setItem('profilePic', this.imageSrc);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  openAddDeviceForm() {
+    this.isAddDeviceFormOpen = true;
+  }
+ 
 
   onRegisterNewDevice() {
     if (this.registerNewDeviceForm.valid) {
@@ -89,5 +109,9 @@ export class Devices implements OnInit {
 
   openEditDeviceForm(){
     this.hideButton = true;
+  }
+  
+  goToMap(){
+    this.router.navigate(['/map']);
   }
 }

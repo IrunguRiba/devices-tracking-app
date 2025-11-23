@@ -3,6 +3,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { MainService } from './main-service';
 import {CommonModule} from  '@angular/common';
 import { User } from './interfaces/user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,13 +21,18 @@ devicePic='/responsive.png';
 user!:User
 latestLocation: Location | null= null;
 
-  constructor(private mainService: MainService){}
+  constructor(private mainService: MainService, private router: Router){}
 
 
   ngOnInit():void{
     const userId = localStorage.getItem('userId')!; // ! used since The user id MUST be there after signin and that it will be passed
       this.onGetDashInformation(userId);
   }
+
+  goBack(){
+    this.router.navigate(['/sign-in']);
+      }
+
   onGetDashInformation(_id: string):void{
   this.mainService.getUserById(_id).subscribe(
      (response:any)=>{
@@ -39,5 +45,6 @@ latestLocation: Location | null= null;
     ()=>console.log("complete")
   )
   }
+ 
 
 }

@@ -22,25 +22,33 @@
   <hr class="nav-divider" (click)="openAddDeviceForm()">
   <h2 id="myDevices">My Devices</h2>
 </div>
+<div class="container" *ngIf="!isAddDeviceFormOpen">
 
-  <div class="container" *ngIf="!isAddDeviceFormOpen">
-    <div class="data">
-      <p>Iphone 12 pro max</p>
-    </div>
-  
-    <div class="card">
-      <span class="active-text">
-        ACTIVE
-        <br>
-      Location
-        <img [src]="sharePic" alt="Active Devices" class="stat-icon">
-      </span>
-
-   
-    </div>
-    <p><strong>[</strong> 12.6566666 &nbsp; <strong> </strong> 36.3454555]</p>
-<h5> Sunday 12:01:48</h5>
+  <div class="data">
+    <p>Iphone 12 pro max</p>
   </div>
+
+  <div class="card">
+    <span class="active-text">
+      ACTIVE <br>
+      Location
+      <img [src]="sharePic" alt="Active Devices" class="stat-icon" (click)=
+      "goToMap()">
+    </span>
+  </div>
+
+  <p><strong>[</strong> 12.6566666 &nbsp;<strong> </strong>36.3454555]</p>
+  <h5>Sunday 12:01:48</h5>
+  <input type="file" #fileInput accept="image/*" style="display:none" (change)="onFileSelected($event)">
+
+  <button class="absolute-upload-btn" (click)="fileInput.click()">
+    <img [src]="imageSrc || upload" alt="Upload" class="upload-icon">
+  </button>
+
+</div>
+
+
+
   
   <hr class="nav-divider">
 
