@@ -12,7 +12,7 @@ export class AuthService {
 
  registerUser(user: User): Observable<User>{
   console.log("Posting new user...")
-return this.http.post<User>('https://tracking-app-3.onrender.com/api/newUsers', user)
+return this.http.post<User>('https://tracking-app-3.onrender.com/api/newUser', user)
  }
   
 logInUser(user:User): Observable<User>{
