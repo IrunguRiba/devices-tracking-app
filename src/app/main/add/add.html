@@ -1,0 +1,30 @@
+<div class="user-container">
+    <div class="profile-header">
+        <div class="user-details">
+            <p class="username"><strong>UserName: {{ userInfo.userName }}</strong></p>
+            <div class="name">
+                <h3>FirstName: <span>{{ userInfo.firstName }}</span></h3>
+                <h3>LastName: <span>{{ userInfo.lastName }}</span></h3>
+            </div>
+            <div class="contact-info">
+                <p><strong>Email: {{ userInfo.email }}</strong></p>
+                <p><strong>Role: {{ userInfo.role }}</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="device-info" *ngIf="userInfo.deviceInfo?.length">
+        <div class="device-box">
+            <h3 class="info-title">Number of Devices: <span>{{ userInfo.deviceInfo?.length }}</span></h3>
+        </div>
+    </div>
+
+    <div class="tracking-info" *ngIf="userInfo.trackedDevices?.length">
+        <h3 class="info-title">External Tracked Devices:</h3>
+        <ul>
+            <li *ngFor="let trackedDevice of userInfo.trackedDevices">
+                <p>{{ trackedDevice.deviceInfo }}</p>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -2,6 +2,7 @@
 export interface Location {
     latitude: number;
     longitude: number;
-    timestamp: string;
+    area?: string;  
+  timestamp?: string; 
 
 }

@@ -1,0 +1,230 @@
+.dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+    justify-content: flex-start;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1 1 300px;
+    padding: 18px 24px;
+    border-radius: 14px;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .stat-card:hover {
+    box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+  }
+  .stat-content {
+    flex: 1;
+  }
+  
+  .stat-title {
+    font-size: 0.95rem;
+    color: #4ac01b;
+    line-height: 1.4em;
+  }
+  
+  .stat-title strong {
+    color: #9c8712;
+    font-size: 1.05rem;
+  }
+  
+  .stat-title em {
+    color: #4ba716;
+    font-style: normal;
+    font-weight: bold;
+  }
+  
+  .stat-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 6px;
+    padding: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+  
+  .stat-value {
+    font-weight: 700;
+    font-size: 1.6em;
+    min-width: 36px;
+    text-align: center;
+  }
+  
+  .myLocation {
+    margin-top: 25px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    color: #4a3f00;
+  }
+  
+  .myLocation p,
+  .myLocation div {
+    margin: 5px 0;
+    font-weight: 500;
+  }
+  
+  
+    .track-btn {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px; 
+      background: linear-gradient(135deg, #110301, #8b8181);
+      color: #f2f2f1;
+      font-size: 1.1rem;
+      font-family: "Poppins", sans-serif;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(60, 68, 97, 0.5);
+    
+    }
+    
+    .track-btn:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+    
+    .pin-input-container {
+      position: absolute;
+      top: 26%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeIn 0.6s ease-in-out forwards;
+    }
+    
+    .pin-boxes {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .pin-box {
+      width: 45px;
+      height: 55px;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 2px solid #5f5f5d;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #e9ecee;
+      font-family: "Poppins", sans-serif;
+      outline: none;
+      animation: fadeInInputs 0.4s ease forwards;
+      transition: all 0.3s ease;
+    }
+    
+    .pin-box:focus {
+      border-color: #552222;
+      box-shadow: 0 0 12px rgba(19, 18, 18, 0.7);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -20%); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+    
+    @keyframes fadeInButton {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeInInputs {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    #enterBtn {
+      position: absolute;
+      top: 100%;
+      left: 37%;
+      transform: translate(-50%, -50%);
+      padding: 16px 28px;
+      margin-top: 10%;
+      border: none;
+      border-radius: 10px;
+      background:#3d3433;
+      color: #f2f2f1;
+      font-size: 1.6rem;
+      font-family: "Poppins", sans-serif;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(60, 68, 97, 0.5);
+      animation: fadeInInputs 0.5s ease forwards;
+      transition: all 0.5s ease;
+    }
+    
+    
+  .trackingDevicesContainer{
+    position: absolute;
+      top: 57%;
+      width: 85%;
+      left: 0.5%;
+      height: 20%;
+      transform: translate(-50%, -50%);
+      padding: 16px 28px;
+      border: none;
+      border-radius: 10px;
+      color: #f2f2f1;
+      font-size: 1rem;
+      font-family: "Poppins", sans-serif;
+      letter-spacing: 2px;
+      cursor: pointer;
+      animation: fadeInInputs 0.5s ease forwards;
+      transition: all 0.5s ease;
+    
+  }
+  
+  
+  .liveDevices{
+    margin-top: 10px;
+   letter-spacing: 3px;
+    font-weight: 600;
+    margin-left: 24%;
+    color: #115b8d;
+    font-size: 1.6rem;
+  }
+  
+  
+  
+  location-divider{
+    width: 100%;
+    border: 0.5px solid #444;
+    margin-top: 10px;
+  }
+ 
+  
+  #title {
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: #4ba716; 
+    text-align: center;
+    letter-spacing: 1px; 
+    text-transform: uppercase; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    animation: fadeInTitle 0.6s ease-in-out;
+  }
+  @keyframes fadeInTitle {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

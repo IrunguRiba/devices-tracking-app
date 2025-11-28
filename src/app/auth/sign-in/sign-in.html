@@ -1,33 +1,37 @@
 <div class="signInForm">
-    <div class="sign-in-header">
-      <h3 id="sign-in-title">Sign in</h3>
-      <a class="create-account-btn" (click)="goToAuth()">Create account</a>
-    </div>
-  
-    <form [formGroup]="loginForm" (ngSubmit)="onLogInUser()">
-      <div class="input-group">
-        <input id="email" type="email" formControlName="email" />
-        <label for="email">Email</label>
-      </div>
-  
-      <div class="input-group">
-        <input id="password" type="password" formControlName="password" />
-        <label for="password">Password</label>
-      </div>
-  
-      <div class="button-row">
-        <button type="submit" [disabled]="loginForm.invalid" class="submit-btn">
-          Sign in
-        </button>
-      </div>
-  
-      <hr class="divider" />
-   <div class="social-login">
-        <div class="continue-inline">
-          <span class="continue-text">Continue with</span>
-          <img src="/google.png" alt="Google logo" class="google-icon" />
-        </div>
-      </div>
-    </form>
+  <div class="sign-in-header">
+    <h3 id="sign-in-title">Sign in</h3>
+    <a class="create-account-btn" (click)="goToAuth()">Create account</a>
   </div>
-  
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLogInUser()">
+    <div class="input-group">
+      <input id="email" type="email" formControlName="email" />
+      <label for="email">Email</label>
+    </div>
+
+    <div class="input-group">
+      <input id="password" type="password" formControlName="password" />
+      <label for="password">Password</label>
+    </div>
+
+    <div class="button-row">
+      <button type="submit" [disabled]="loginForm.invalid" class="submit-btn">
+        Sign in
+      </button>
+
+      <!-- Show the spinner when 'loading' is true -->
+     
+    </div>
+
+    <hr class="divider" />
+    <div class="social-login">
+      <div class="continue-inline">
+        <span class="continue-text">Continue with</span>
+        <img src="/google.png" alt="Google logo" class="google-icon" />
+      </div>
+    </div>
+  </form>
+</div>
+
+<app-loading-spinner *ngIf="loading" [loading]="loading"></app-loading-spinner>

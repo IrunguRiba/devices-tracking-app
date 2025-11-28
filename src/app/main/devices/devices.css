@@ -1,6 +1,6 @@
 
 .addDeviceForm{
-  padding: 5px;
+  padding: 10px;
   border-radius: 10px;
   box-shadow: 8px 8px 16px #141414, -8px -8px 16px #202020;
 
@@ -84,14 +84,12 @@
 
     .device-button-wrapper {
   display: flex;
-  gap: 20px; 
-  margin-top: 10%;
-  margin-left: 5%;
+  gap: 1px; 
+  margin-top: 5%;
 }
   
     .openDeviceFormBtn{
-      margin-top: 1%;
-      margin-left: 10%;
+      margin-left: 7%;
       background: transparent;
       border: none;
       cursor: pointer;

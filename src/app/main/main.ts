@@ -4,11 +4,13 @@ import { MainService } from './main-service';
 import {CommonModule} from  '@angular/common';
 import { User } from './interfaces/user';
 import { Router } from '@angular/router';
+import { BackButton } from '../shared/back-button/back-button';
+
 
 
 @Component({
   selector: 'app-main',
-  imports: [RouterOutlet, RouterLinkActive, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLinkActive, RouterLink, CommonModule, BackButton],
 templateUrl: './main.html',
   styleUrl: './main.css'
 })
@@ -29,9 +31,6 @@ latestLocation: Location | null= null;
       this.onGetDashInformation(userId);
   }
 
-  goBack(){
-    this.router.navigate(['/sign-in']);
-      }
 
   onGetDashInformation(_id: string):void{
   this.mainService.getUserById(_id).subscribe(

@@ -10,33 +10,29 @@ import { Router } from '@angular/router';
   selector: 'app-devices',
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './devices.html',
-  styleUrl: './devices.css',
+  styleUrls: ['./devices.css'],
+  standalone: true,
 })
 export class Devices implements OnInit {
   isAddDeviceFormOpen: boolean = false;
   formSubmitted: boolean = false;
-  sharePic='/share.png';
-  addPic='/add.png';
-  editPic='/edit.png';
-  phoneImage='/phoneImage.png';
-  upload='/upload.png';
+  sharePic = '/share.png';
+  addPic = '/add.png';
+  editPic = '/edit.png';
+  phoneImage = '/phoneImage.png';
+  upload = '/upload.png';
   hideButton: boolean = false;
   imageSrc: string | null = null;
 
-  
-
-
-  
-  device?: NewDevice;
-
-  // name:        string;
-  // type:        string;
-  // model:       string;
-  // description: string;
-  // userId:      string;
+  myDevices: [] = []; 
 
   registerNewDeviceForm: FormGroup;
-  constructor(private mainService: MainService, private formBuilder: FormBuilder, private router:Router) {
+
+  constructor(
+    private mainService: MainService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {
     this.imageSrc = localStorage.getItem('profilePic');
 
     this.registerNewDeviceForm = this.formBuilder.group({
@@ -49,13 +45,12 @@ export class Devices implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Add component initialized');
     const userId = localStorage.getItem('userId');
     if (userId) {
       this.registerNewDeviceForm.patchValue({ userId });
     }
   }
-  
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
@@ -71,26 +66,31 @@ export class Devices implements OnInit {
   openAddDeviceForm() {
     this.isAddDeviceFormOpen = true;
   }
- 
 
   onRegisterNewDevice() {
     if (this.registerNewDeviceForm.valid) {
       const deviceData = this.registerNewDeviceForm.value;
 
-      this.mainService.addNewDevice(deviceData).subscribe({
+      const userId = localStorage.getItem('userId'); 
+
+      if (!userId) {
+        console.error('No user ID found in localStorage');
+        return;
+      }
+
+      this.mainService.addNewDevice(deviceData, userId).subscribe({
         next: (device: NewDevice) => {
-          console.log(' New device registered:', device);
-          this.device = device;
-          this.registerNewDeviceForm.reset();
           Swal.fire({
             icon: 'success',
             title: 'New Device Added',
-            text: `New Device registered successfully.`,
+            text: `Device registered successfully.`,
             confirmButtonColor: '#7e102c',
             background: 'rgba(43, 19, 25, 0.9)',
             color: '#E1D4C1',
           });
-          this.formSubmitted = true; 
+
+          console.log("Registed Device: ", device)
+          this.registerNewDeviceForm.reset();
           const userId = localStorage.getItem('userId');
           if (userId) {
             this.registerNewDeviceForm.patchValue({ userId });
@@ -107,11 +107,8 @@ export class Devices implements OnInit {
   }
 
 
-  openEditDeviceForm(){
-    this.hideButton = true;
-  }
-  
-  goToMap(){
+  goToMap() {
     this.router.navigate(['/map']);
   }
+
 }

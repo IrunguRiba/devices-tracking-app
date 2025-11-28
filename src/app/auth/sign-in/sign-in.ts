@@ -12,15 +12,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LoadingSpinner} from '../../loading-spinner/loading-spinner'
 
 @Component({
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule, HttpClientModule, CommonModule],
+  imports: [ReactiveFormsModule, HttpClientModule, CommonModule,  LoadingSpinner],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css'
 })
 export class SignIn {
   googleLogo = '/google.png';
+
+  loading = false;
 
   loginForm!: FormGroup;
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
@@ -34,6 +37,7 @@ export class SignIn {
   onLogInUser() {
     if (this.loginForm.valid) {
       const user = this.loginForm.value;
+      this.loading = true;
       this.authService.logInUser(user).subscribe({
         next: (response: any) => {
           console.log('log in sucess', response);
@@ -49,6 +53,7 @@ export class SignIn {
           console.log(error);
         },
         complete: () => {
+          this.loading = false;
           console.log('Completed log in');
         },
       });

@@ -1,7 +1,6 @@
-import { DeviceInfo } from './device';
-import {TrackedDevice} from './trackedDevice'
 
-export interface User {
+import { DeviceInfo } from './device';
+export interface TrackedDevice {
     _id: string;
     firstName: string;
     lastName: string;
@@ -12,7 +11,7 @@ export interface User {
     role: string;
     isAdmin: boolean;
     pin?: string;
-    deviceInfo: DeviceInfo[];
+    deviceInfo: DeviceInfo;
     trackedDevices: TrackedDevice[];
     __v?: number;
   }

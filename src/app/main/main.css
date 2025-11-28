@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   font-family: "Poppins", sans-serif;
-  margin-top: 4%;
   color: #e2dfd7;
   text-align: center;
   animation: fadeIn 1.5s ease-out;
@@ -171,38 +170,3 @@ router-outlet ~ * {
   opacity: 0.9;
 
 }
-
-/* From Uiverse.io by Jedi-hongbin */ 
-button {
- margin-top: 7%;
- margin-left: 1%;
-  display: flex;
-  height: 3em;
-  width: 100px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 3px;
-  letter-spacing: 1px;
-  transition: all 0.2s linear;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  font-size: 0.8rem;
- }
- 
- button > svg {
-  margin-right: 5px;
-  margin-left: 5px;
-  font-size: 20px;
-  transition: all 0.4s ease-in;
- }
- 
- button:hover > svg {
-  font-size: 1.2em;
-  transform: translateX(-5px);
- }
- 
- button:hover {
-  box-shadow: 9px 9px 33px #07055e, -9px -9px 33px #261da3;
-  transform: translateY(-2px);
- }

@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
-import {Device } from '../main/interfaces/device';
+import {DeviceInfo } from '../main/interfaces/device';
 import {Observable} from 'rxjs'
 import { MainService } from './../main/main-service';
 
@@ -12,7 +12,6 @@ import { MainService } from './../main/main-service';
 })
 export class LocationService  {
 
- 
 
   private socket: Socket;
   constructor(private http:HttpClient, private mainService: MainService) { 
@@ -20,11 +19,10 @@ export class LocationService  {
   } 
   
   protected map=signal("Waiting for user Location");
-
-
- getLocation(device:Device ):Observable<Device>{
+  
+ getLocation(device:DeviceInfo ):Observable<DeviceInfo>{
   console.log("Getting Location from Service",);
-  return this.http.get<Device>(`https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`);
+  return this.http.get<DeviceInfo>(`https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`);
  }
 
 
@@ -54,26 +52,25 @@ export class LocationService  {
 
 
 watchLocationOnInit(_id:string):void{
- const storedUser=localStorage.getItem('user')!
- console.log(localStorage.getItem('user'));
+ const userId=localStorage.getItem('userId')!
 
- if (!storedUser) {
-  console.error("No user stored in localStorage");
-  return;
-}
 
-    this.mainService.getUserById(_id).subscribe(
+    this.mainService.getUserById(userId).subscribe(
       
       (user: any) => {
-
-        
         console.log("User found for location",user);
         
-  const userId = user.user._id;
   console.log("User ID for location tracking:", userId);
+  const devices = user.user.deviceInfo || [];
 
-  const deviceId = user.user.deviceInfo?._id || 'No Device Found! Register a Device';
-
+  if (devices.length === 0) {
+    console.warn('No devices found for this user. Please register a device.');
+    return; 
+  }
+  const deviceId = devices[0]._id;
+  
+  console.log("Tracking Device ID:", deviceId);
+  
 
   if (!navigator.geolocation) {
     console.error('Geolocation is not supported by this device.');
