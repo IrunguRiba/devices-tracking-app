@@ -17,6 +17,9 @@ export class Dashboard {
   imageSrc: string | null = null;
 
   constructor(private router: Router, private mainService: MainService) {}
+  ngOnInit() {
+    this.getAllDevices();
+  }
   goToMap() {
     this.router.navigate(['/map']);
   }
@@ -59,7 +62,5 @@ export class Dashboard {
       error: (err: any) => console.error('Error fetching devices:', err),
     });
   }
-  ngOnInit() {
-    this.getAllDevices();
-  }
+ 
 }
