@@ -45,7 +45,7 @@ export class Dashboard implements OnInit {
       next: (data: any) => {
         console.log('API RESPONSE:', data);
 
-        if (!data.user || !Array.isArray(data.user.deviceInfo)) {
+        if (!data.user || !data.user.deviceInfo) {
           console.error('Invalid response: deviceInfo missing');
           return;
         }
@@ -57,6 +57,7 @@ export class Dashboard implements OnInit {
             name: device.model || device.name || 'Unknown Device',
             model: device.model || 'Unknown Model',
           };
+          
         });
       },
       error: (err: any) => console.error('Error fetching devices:', err),

@@ -18,7 +18,7 @@ export const routes: Routes = [
   {path: 'sign-in', component: SignIn},
   {path: 'main', component: Main,
   children: [
-    { path: '', redirectTo: 'devices', pathMatch: 'devices' },
+    { path: '', redirectTo: 'devices', pathMatch: 'full' },
     { path: 'dashboard', component: Dashboard },
     { path: 'devices', component: Devices },
     { path: 'add', component: Add },

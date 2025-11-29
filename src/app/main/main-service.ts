@@ -10,7 +10,7 @@ import { Socket } from 'socket.io-client';
   providedIn: 'root'
 })
 export class MainService {
-  private globalUrl='https://tracking-app-3.onrender.com/api/getUser';
+  private globalUrl='http://localhost:4000/api/getUser';
   
   constructor(private http: HttpClient){}
 
@@ -19,7 +19,7 @@ export class MainService {
   addNewDevice(device: NewDevice, userId: string): Observable<NewDevice> {
     console.log("Adding new device:", device);
   
-    const addDeviceUrl = `https://tracking-app-3.onrender.com/api/devices/registerMyDevice/${userId}`;
+    const addDeviceUrl = `http://localhost:4000/api/devices/registerMyDevice/${userId}`;
     return this.http.post<NewDevice>(addDeviceUrl, device);
   }
   
