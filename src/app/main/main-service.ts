@@ -19,7 +19,7 @@ export class MainService {
   addNewDevice(device: NewDevice, userId: string): Observable<NewDevice> {
     console.log("Adding new device:", device);
   
-    const addDeviceUrl = `https://tracking-app-3.onrender.com/api/devices/registerMyDevice/${userId}`;
+    const addDeviceUrl = `http://localhost:4000/api/devices/registerMyDevice/${userId}`;
     return this.http.post<NewDevice>(addDeviceUrl, device);
   }
   
@@ -29,12 +29,12 @@ export class MainService {
    }
 
 getUserDataByPin(pin: string): Observable<User> {
-  const getUserByPinUrl = `https://tracking-app-3.onrender.com/api/getUserByPin/${pin}`;
+  const getUserByPinUrl = `http://localhost:4000/api/getUserByPin/${pin}`;
   return this.http.get<User>(getUserByPinUrl);
 }
 
 editDeviceById(deviceId: string, updatedDevice: NewDevice): Observable<NewDevice> {
-  const editDeviceUrl = `https://tracking-app-3.onrender.com/api/devices/editDevice/${deviceId}`;
+  const editDeviceUrl = `http://localhost:4000/api/devices/editDevice/${deviceId}`;
   return this.http.put<NewDevice>(editDeviceUrl, updatedDevice);
 }
 }

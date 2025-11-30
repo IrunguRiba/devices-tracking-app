@@ -15,14 +15,14 @@ export class LocationService  {
 
   private socket: Socket;
   constructor(private http:HttpClient, private mainService: MainService) { 
-    this.socket = io('https://tracking-app-3.onrender.com/');
+    this.socket = io('http://localhost:4000');
   } 
   
   protected map=signal("Waiting for user Location");
   
  getLocation(device:DeviceInfo ):Observable<DeviceInfo>{
   console.log("Getting Location from Service",);
-  return this.http.get<DeviceInfo>(`https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`);
+  return this.http.get<DeviceInfo>(`http://localhost:4000/api/devices/getMyDeviceInfo/${device._id}`);
  }
 
 
