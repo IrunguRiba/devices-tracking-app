@@ -82,13 +82,19 @@ export class Devices implements OnInit {
         next: (device: NewDevice) => {
           Swal.fire({
             icon: 'success',
-            title: 'New Device Added',
-            text: `Device registered successfully.`,
-            confirmButtonColor: '#7e102c',
-            background: 'rgba(43, 19, 25, 0.9)',
-            color: '#E1D4C1',
+            title: 'Account Registered',
+            text: `Redirecting to Dashboard`,
+            
+            confirmButtonColor: '#0a0a0d',
+            background: 'rgba(31, 27, 107)',
+            color: '#E1D4C1'
+          }).then(() => {
+           setTimeout(()=>{
+            this.router.navigate(['/main/dashboard']);
+           }, 500)
+   
           });
-
+        
           console.log("Registed Device: ", device)
           this.registerNewDeviceForm.reset();
           const userId = localStorage.getItem('userId');
@@ -96,6 +102,7 @@ export class Devices implements OnInit {
             this.registerNewDeviceForm.patchValue({ userId });
           }
           this.isAddDeviceFormOpen = false;
+       
         },
         error: (error: any) => {
           console.error('Error registering device:', error);

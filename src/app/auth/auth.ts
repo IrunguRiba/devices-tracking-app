@@ -57,9 +57,9 @@ export class Auth {
           Swal.fire({
             icon: 'success',
             title: 'Account Registered',
-            text: `Redirecting to Login Page.`,
-            confirmButtonColor: '#7e102c',
-            background: 'rgba(43, 19, 25)',
+            text: `Redirecting to Log in`,
+            confirmButtonColor: '#0a0a0d',
+            background: 'rgba(31, 27, 107)',
             color: '#E1D4C1'
           });
         },
