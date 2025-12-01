@@ -50,5 +50,5 @@
     </div>
   </div>
 </form>
-<app-loading-spinner *ngIf="loading" [loading]="loading"></app-loading-spinner>
+<app-loading-spinner *ngIf="loading" [loading]="loading" (ngSubmit)="isLoginMode ? onLogInUser() : onCreateUser()"></app-loading-spinner>
 
