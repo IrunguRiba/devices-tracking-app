@@ -42,7 +42,6 @@ export class SignIn {
       this.authService.logInUser(user).subscribe({
         next: (response: any) => {
           console.log('log in sucess', response);
-
           if (response && response.user && response.user._id) {
             localStorage.setItem('userId', response.user._id);
             localStorage.setItem('user', JSON.stringify(response.user));

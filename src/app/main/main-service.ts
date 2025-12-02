@@ -38,6 +38,7 @@ export class MainService {
       Authorization: `Bearer ${token}`
     };
     const getUserByPinUrl = `https://tracking-app-backend-g3al.onrender.com/api/getUserByPin/${pin}`;
+    
     return this.http.get<User>(getUserByPinUrl, {headers});
   }
 

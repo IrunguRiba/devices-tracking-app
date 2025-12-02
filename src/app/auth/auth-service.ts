@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'https://tracking-app-backend-g3al.onrender.com'; 
+  private baseUrl = 'https://tracking-app-backend-g3al.onrender.com/api'; 
 
   constructor(private http: HttpClient) {}
 
