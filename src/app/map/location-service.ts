@@ -14,7 +14,6 @@ export class LocationService {
   protected map = signal("Waiting for user Location");
 
   constructor(private http: HttpClient, private mainService: MainService) { 
-    // Change this to the correct backend URL as needed
     this.socket = io('https://tracking-app-backend-g3al.onrender.com/');
   } 
   

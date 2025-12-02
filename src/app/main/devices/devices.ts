@@ -82,9 +82,8 @@ export class Devices implements OnInit {
         next: (device: NewDevice) => {
           Swal.fire({
             icon: 'success',
-            title: 'Account Registered',
+            title: 'Device Added',
             text: `Redirecting to Dashboard`,
-            
             confirmButtonColor: '#0a0a0d',
             background: 'rgba(31, 27, 107)',
             color: '#E1D4C1'
