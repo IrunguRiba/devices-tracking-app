@@ -31,7 +31,6 @@ export class MainService {
     const getUserByIdUrl = `${this.globalUrl}/${_id}`;
 
     if (!token) {
-      //redirect to about page https://device-tracking-app-frontend-xi.vercel.app/about
       window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
    return EMPTY;
     }
