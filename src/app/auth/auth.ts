@@ -85,6 +85,8 @@ export class Auth {
           console.log('log in sucess', response);
 
           if (response && response.user && response.user._id) {
+            localStorage.setItem('token', response.token)
+            console.log('token', response.token)
             localStorage.setItem('userId', response.user._id);
             localStorage.setItem('user', JSON.stringify(response.user));
       console.log('User stored successfully:', response.user);

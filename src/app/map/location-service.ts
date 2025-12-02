@@ -13,14 +13,26 @@ export class LocationService {
   private socket: Socket;
   protected map = signal("Waiting for user Location");
 
+  
   constructor(private http: HttpClient, private mainService: MainService) { 
-    this.socket = io('https://tracking-app-backend-g3al.onrender.com/');
+    const token = localStorage.getItem('token');
+    this.socket = io('https://tracking-app-backend-g3al.onrender.com/',{
+      auth: {
+        token: token  
+      }
+    });
   } 
   
   getLocation(device: DeviceInfo): Observable<DeviceInfo> {
     console.log("Getting Location from Service");
+    const token = localStorage.getItem('token');
     return this.http.get<DeviceInfo>(
-      `https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`
+      `https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`,
+    {
+      headers:{
+        Authorization:`Bearer ${token}`
+      }
+    }
     );
   }
 
@@ -37,11 +49,19 @@ export class LocationService {
           return;
         }
 
-        const deviceId = devices[0]._id;
+        const deviceWithoutLocation = devices.find(
+          (device: any) => !device.location || device.location.length === 0
+        );
+  
+        if (!deviceWithoutLocation) {
+          console.log('All devices already have location data');
+          return;
+        }
+        const deviceId = deviceWithoutLocation._id;
         console.log("Tracking Device ID:", deviceId);
 
         if (!navigator.geolocation) {
-          console.error('Geolocation is not supported by this device.');
+          console.error('Geolocation is not supported by this device');
           return;
         }
 

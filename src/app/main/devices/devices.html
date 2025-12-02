@@ -64,5 +64,15 @@
     <label for="deviceUser">User</label>
   </div>
 
-  <button id="addBtn" type="submit" [disabled]="!registerNewDeviceForm.valid">Add Device Info</button>
+  <div class="device-button-message">
+    <ng-container *ngIf="!hideButton; else deviceAddedMessage">
+      <button id="addBtn" type="submit" [disabled]="!registerNewDeviceForm.valid">
+        Add Device Info
+      </button>
+    </ng-container>
+  
+    <ng-template #deviceAddedMessage>
+      <p class="info-text">Information already Exists.</p>
+    </ng-template>
+  </div>
 </form>

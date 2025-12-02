@@ -13,11 +13,12 @@ import { AuthService } from '../auth-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoadingSpinner} from '../../loading-spinner/loading-spinner'
+import { MainService } from '../../main/main-service';
 
 @Component({
   selector: 'app-sign-in',
   imports: [ReactiveFormsModule, HttpClientModule, CommonModule,  LoadingSpinner],
-  templateUrl: './sign-in.html',
+templateUrl: './sign-in.html',
   styleUrl: './sign-in.css'
 })
 export class SignIn {
@@ -26,7 +27,7 @@ export class SignIn {
   loading = false;
 
   loginForm!: FormGroup;
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private mainService: MainService) {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,7 +48,10 @@ export class SignIn {
             localStorage.setItem('user', JSON.stringify(response.user));
       console.log('User stored successfully:', response.user);
           }
-          this.router.navigate(['/main']);
+if(!response.user.deviceInfo.location){
+  this.router.navigate(['/main']);
+}
+this.router.navigate(['/main/dashboard']);
         },
         error: (error: any) => {
           console.log(error);

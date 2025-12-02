@@ -44,28 +44,40 @@ export class Devices implements OnInit {
     });
   }
 
+
+
   ngOnInit(): void {
+    this.existingDeviceCheck();
     const userId = localStorage.getItem('userId');
     if (userId) {
       this.registerNewDeviceForm.patchValue({ userId });
     }
+  
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
+existingDeviceCheck() {
+  const userId = localStorage.getItem('userId') || '';
+  if (!userId) return;
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imageSrc = reader.result as string;
-      localStorage.setItem('profilePic', this.imageSrc);
-    };
-    reader.readAsDataURL(file);
-  }
+  this.mainService.getUserById(userId).subscribe({
+    next: (data: any) => {
+      if (data.user?.deviceInfo?.length > 0) {
+        const deviceSendingLocation = data.user.deviceInfo.some((device: any) => device.location && device.location.length > 0);
+        this.hideButton = deviceSendingLocation;
+      } else {
+        this.hideButton = false;
+      }
+    },
+    error: (error: any) => {
+      console.error('Error fetching user data:', error);
+      this.hideButton = false;
+    },
+    complete: () => {
+      console.log('Completed checking existing devices');
+    }
+  });
+}
 
-  openAddDeviceForm() {
-    this.isAddDeviceFormOpen = true;
-  }
 
   onRegisterNewDevice() {
     if (this.registerNewDeviceForm.valid) {
