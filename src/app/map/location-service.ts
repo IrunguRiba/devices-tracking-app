@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 import { Socket, io } from 'socket.io-client';
 import { HttpClient } from '@angular/common/http';
 import { DeviceInfo } from '../main/interfaces/device';
-import { Observable, EMPTY } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MainService } from './../main/main-service';
 
 @Injectable({
@@ -16,37 +16,25 @@ export class LocationService {
   
   constructor(private http: HttpClient, private mainService: MainService) { 
     const token = localStorage.getItem('token');
-  
-    if (!token) {
-      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
-      return EMPTY;
-    }
-  
-    this.socket = io('https://tracking-app-backend-g3al.onrender.com/', {
-      auth: { token: token }
+    this.socket = io('https://tracking-app-backend-g3al.onrender.com/',{
+      auth: {
+        token: token  
+      }
     });
-  }
-  
+  } 
   
   getLocation(device: DeviceInfo): Observable<DeviceInfo> {
     console.log("Getting Location from Service");
     const token = localStorage.getItem('token');
-    
     return this.http.get<DeviceInfo>(
-      
       `https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`,
-
-      {
-        headers:{
-          Authorization:`Bearer ${token}`
-        }
-        
+    {
+      headers:{
+        Authorization:`Bearer ${token}`
       }
-    
+    }
     );
-    
   }
- 
 
   watchLocationOnInit(_id: string): void {
     const userId = localStorage.getItem('userId')!;
