@@ -17,11 +17,13 @@ export class AuthService {
   }
 
   logInUser(user: User): Observable<User> {
+    const token=localStorage.getItem('token')
+
     console.log("Logging in user...");
     const payload = {
       email: user.email,
       password: user.password
     };
-    return this.http.post<User>(`${this.baseUrl}/userLogIn`, payload);
+    return this.http.post<User>(`${this.baseUrl}/userLogIn`, payload, { headers });
   }
 }
