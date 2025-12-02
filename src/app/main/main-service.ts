@@ -25,11 +25,16 @@ export class MainService {
   
   getUserById(_id: string): Observable<User> {
   const token= localStorage.getItem('token')
-
     const headers = {
       Authorization: `Bearer ${token}`
     };
     const getUserByIdUrl = `${this.globalUrl}/${_id}`;
+
+    if (!token) {
+      //redirect to about page https://device-tracking-app-frontend-xi.vercel.app/about
+      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+    return console.error('No token found');
+    }
     return this.http.get<User>(getUserByIdUrl, {headers});
   }
 
