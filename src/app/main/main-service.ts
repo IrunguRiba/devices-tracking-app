@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { User } from './interfaces/user';
 import { DeviceInfo } from './interfaces/device';
 import { NewDevice } from './interfaces/newDevice';
@@ -33,7 +33,7 @@ export class MainService {
     if (!token) {
       //redirect to about page https://device-tracking-app-frontend-xi.vercel.app/about
       window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
-    throw new Error('No token found');
+   return EMPTY;
     }
     return this.http.get<User>(getUserByIdUrl, {headers});
   }
