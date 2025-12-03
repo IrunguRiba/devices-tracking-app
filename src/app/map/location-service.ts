@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { DeviceInfo } from '../main/interfaces/device';
 import { Observable } from 'rxjs';
 import { MainService } from './../main/main-service';
+import {ExtendedGetResult, FingerprintjsProAngularService, GetResult,} from '@fingerprintjs/fingerprintjs-pro-angular'
 
 @Injectable({
   providedIn: 'root'
@@ -12,16 +13,29 @@ export class LocationService {
 
   private socket: Socket;
   protected map = signal("Waiting for user Location");
+  visitorId: string | null = null; 
+  extendedResult: null | ExtendedGetResult | GetResult = null
+
 
   
-  constructor(private http: HttpClient, private mainService: MainService) { 
+  constructor(private http: HttpClient, private mainService: MainService, private fingerprintService: FingerprintjsProAngularService) { 
+    
     const token = localStorage.getItem('token');
     this.socket = io('https://tracking-app-backend-g3al.onrender.com/',{
       auth: {
         token: token  
       }
     });
+    
   } 
+
+  async onIdentifyButtonClick(): Promise<void> {
+    const data = await this.fingerprintService.getVisitorData()
+    this.visitorId = data.visitorId
+    this.extendedResult = data
+    console.log('Visitor ID:', this.visitorId);
+  }
+ 
   
   getLocation(device: DeviceInfo): Observable<DeviceInfo> {
     console.log("Getting Location from Service");
@@ -72,8 +86,13 @@ export class LocationService {
             this.map.set(`Latitude: ${latitude}, Longitude: ${longitude}`);
             console.log(this.map());
 
+            if (!this.visitorId) {
+              console.warn('Visitor ID is not available. Please identify first.');
+              return;
+            }
+
             if (this.socket) {
-              this.socket.emit('coordinates', { latitude, longitude, userId, deviceId });
+              this.socket.emit('coordinates', { latitude, longitude, userId, deviceId,  visitorId: this.visitorId, extendedResult: this.extendedResult });
               console.log(`Emitted coordinates: Latitude: ${latitude}, Longitude: ${longitude}, UserId: ${userId}, DeviceId: ${deviceId}`);
             }
           },
