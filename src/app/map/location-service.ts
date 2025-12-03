@@ -80,7 +80,7 @@ export class LocationService {
           (error) => {
             console.error('Error watching location changes:', error);
           },
-          { enableHighAccuracy: true, maximumAge: 0, timeout: 50000 } 
+          { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 } 
         );
       },
       (error: any) => console.error(error),
