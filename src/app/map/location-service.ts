@@ -44,8 +44,9 @@ export class LocationService {
         window.alert("Please disable your ad blocker to continue.");
         return; 
       }
-      localStorage.setItem('visitorId', this.visitorId);
       console.log('Visitor ID saved:', this.visitorId);
+      localStorage.setItem('visitorId', this.visitorId);
+    
   
     } catch (error) {
       console.error('Error fetching visitor data:', error);
