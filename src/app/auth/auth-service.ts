@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,  catchError, throwError } from 'rxjs';
 import { User } from './Interfaces/user';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,8 +20,14 @@ export class AuthService {
     console.log("Logging in user...");
     const payload = {
       email: user.email,
-      password: user.password
+      password: user.password,
     };
-    return this.http.post<User>(`${this.baseUrl}/userLogIn`, payload);
+    return this.http.post<User>(`${this.baseUrl}/userLogIn`, payload).pipe(
+      catchError((error:any) => {
+        console.error('Login error:', error);
+        return throwError(error); 
+      })
+    );
   }
+  
 }

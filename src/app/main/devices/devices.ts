@@ -109,7 +109,7 @@ export class Devices implements OnInit {
             title: 'Device Added',
             text: `Redirecting to Dashboard`,
             confirmButtonColor: '#0a0a0d',
-            background: 'rgba(31, 27, 107)',
+            background: 'rgba(31, 27, 107, 0.9)',
             color: '#E1D4C1'
           }).then(() => {
            setTimeout(()=>{
@@ -117,7 +117,6 @@ export class Devices implements OnInit {
            }, 500)
    
           });
-        
           console.log("Registed Device: ", device)
           this.registerNewDeviceForm.reset();
           const userId = localStorage.getItem('userId');

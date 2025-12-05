@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DeviceInfo } from '../../main/interfaces/device';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../auth-service';
@@ -33,54 +34,55 @@ export class SignIn {
     private fb: FormBuilder, 
     private authService: AuthService, 
     private router: Router, 
-   private httpClient: HttpClient
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
-
- onLogInUser() {
-  if (this.loginForm.valid) {
-    const user = this.loginForm.value;
-    this.loading = true;
-
-    const token = localStorage.getItem('jwtToken');  
-    let headers = {};
-    if (token) {
-      headers = { 
-        Authorization: `Bearer ${token}`  
-      };
+  onLogInUser() {
+    if (this.loginForm.valid) {
+      const user = this.loginForm.value;
+      this.loading = true;
+  
+      this.authService.logInUser(user).subscribe({
+        next: (response: any) => {
+          console.log('Log in success', response);
+  
+          if (response && response.user && response.user._id) {
+            console.log('User stored successfully:', response.user);
+          }
+  
+          if (response.user?.deviceInfo?.length > 0) {
+            this.router.navigate(['/main/dashboard']);
+          } else {
+            this.router.navigate(['/main/devices']);
+          }
+        },
+        error: (error: any) => {
+          console.log('Error:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Login failed. Invalid email or password.',
+            icon: 'error',
+            background: 'linear-gradient(135deg, #0a1b3d 0%, #162953 50%, #3a0d0d 100%)', 
+            color: '#E1D4C1',               
+            confirmButtonColor: '#ff3b3b',   
+            iconColor: '#ff4d4d',            
+          });
+        },        
+        
+        complete: () => {
+          this.loading = false;
+          console.log('Login request completed');
+        },
+      });
+    } else {
+      Swal.fire('Validation error', 'Invalid email or password', 'warning');
     }
-    this.httpClient.post<any>('https://tracking-app-backend-g3al.onrender.com/api/userLogIn', user, { headers }).subscribe({
-      next: (response: any) => {
-        console.log('Log in success', response);
-        if (response && response.token) {
-          localStorage.setItem('jwtToken', response.token);  
-        }
-        if (response && response.user && response.user._id) {
-          localStorage.setItem('userId', response.user._id);
-          localStorage.setItem('user', JSON.stringify(response.user));
-          console.log('User stored successfully:', response.user);
-        }
-        if (!response.user.deviceInfo.location) {
-          this.router.navigate(['/main']);
-        } else {
-          this.router.navigate(['/main/dashboard']);
-        }
-      },
-      error: (error: any) => {
-        console.log(error);
-      },
-      complete: () => {
-        this.loading = false;
-        console.log('Completed login');
-      },
-    });
   }
-}
-
 
   goToAuth() {
     this.router.navigate(['/auth']);

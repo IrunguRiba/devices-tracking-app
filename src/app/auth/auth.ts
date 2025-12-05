@@ -59,7 +59,7 @@ export class Auth {
             title: 'Account Registered',
             text: `Redirecting to Log in`,
             confirmButtonColor: '#0a0a0d',
-            background: 'rgba(31, 27, 107)',
+            background: 'rgba(31, 27, 107, 0.9)',
             color: '#E1D4C1'
           });
         },
