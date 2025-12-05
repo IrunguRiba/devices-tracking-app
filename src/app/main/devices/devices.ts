@@ -74,7 +74,7 @@ export class Devices implements OnInit {
         const deviceHasMatchingVisitorId = data.user.deviceInfo?.some((device: DeviceInfo) => device.visitorId === visitorIdVerification);
         
         console.log("Matching visitorId found:", deviceHasMatchingVisitorId);
-        if (deviceHasMatchingVisitorId || (data.user?.deviceInfo?.length === 0)) {
+        if ( (data.user?.deviceInfo?.length >0) && deviceHasMatchingVisitorId  ) {
           this.hideButton = true;
         } else {
           this.hideButton = false;
