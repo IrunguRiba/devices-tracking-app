@@ -65,6 +65,15 @@ export class Auth {
         },
         error: (error: any) => {
           console.error('Error creating user:', error);
+          Swal.fire({
+            title: 'Oops!',
+            text: 'Email exists already. Please use a different email.',
+            icon: 'error',
+            background: 'linear-gradient(135deg, #0a1b3d 0%, #162953 50%, #3a0d0d 100%)', 
+            color: '#E1D4C1',               
+            confirmButtonColor: '#ff3b3b',   
+            iconColor: '#ff4d4d',            
+          });
         },
         complete: () => {
           this.loading=false;
