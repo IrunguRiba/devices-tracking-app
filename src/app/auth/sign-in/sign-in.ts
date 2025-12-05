@@ -65,13 +65,14 @@ export class SignIn {
           console.log('Error:', error);
           Swal.fire({
             title: 'Oops!',
-            text: 'Invalid email or password.',
+            text: 'Email or Password is incorrect.',
             icon: 'error',
-            background: 'linear-gradient(135deg, #0a1b3d 0%, #162953 50%, #3a0d0d 100%)', 
+            background: 'rgba(31, 27, 107, 0.9)', 
             color: '#E1D4C1',               
             confirmButtonColor: '#ff3b3b',   
             iconColor: '#ff4d4d',            
           });
+          this.loading = false;
         },        
         
         complete: () => {

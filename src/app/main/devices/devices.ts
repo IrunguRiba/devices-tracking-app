@@ -110,7 +110,7 @@ export class Devices implements OnInit {
             text: `Redirecting to Dashboard`,
             confirmButtonColor: '#0a0a0d',
             background: 'rgba(31, 27, 107, 0.9)',
-            color: '#E1D4C1'
+            color: '#825007'
           }).then(() => {
            setTimeout(()=>{
             this.router.navigate(['/main/dashboard']);

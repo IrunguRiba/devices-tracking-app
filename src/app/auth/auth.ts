@@ -67,13 +67,14 @@ export class Auth {
           console.error('Error creating user:', error);
           Swal.fire({
             title: 'Oops!',
-            text: 'Email exists already. Please use a different email.',
+            text: 'Email exists or Password is more than 12 characters',
             icon: 'error',
-            background: 'linear-gradient(135deg, #0a1b3d 0%, #162953 50%, #3a0d0d 100%)', 
+            background: 'rgba(31, 27, 107, 0.9)', 
             color: '#E1D4C1',               
             confirmButtonColor: '#ff3b3b',   
             iconColor: '#ff4d4d',            
           });
+          this.loading=false;
         },
         complete: () => {
           this.loading=false;
@@ -82,6 +83,7 @@ export class Auth {
       });
     } else {
       console.warn('Something went wrong!');
+     
     }
   }
   onLogInUser() {
