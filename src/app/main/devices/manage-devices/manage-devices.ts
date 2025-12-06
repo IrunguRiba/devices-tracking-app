@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MainService } from './../../main-service';
+import { BackButton } from '../../../shared/back-button/back-button';
 
 @Component({
   selector: 'app-manage-devices',
-  imports: [],
+  imports: [ BackButton],
 
 templateUrl: './manage-devices.html',
   styleUrl: './manage-devices.css'
