@@ -1,0 +1,108 @@
+.card {
+    margin: auto;
+    margin-top: 15%;
+    width: 90%;
+    height: 70%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0.6em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+#title {
+    text-align: center;
+    color: #ccc348;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+}
+
+.card p {
+    flex: 1;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: flex 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+    position: relative; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.card p:hover {
+    flex: 4;
+}
+
+.card p span {
+    padding: 0.2em;
+    text-align: center;
+    transform: rotate(-0deg);
+    transition: transform 0.5s;
+    color: #c9b88b;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
+}
+
+.card p:hover span {
+    transform: rotate(0);
+}
+
+.card p::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.card p:hover::before {
+    opacity: 1;
+}
+button {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #6668cc;
+    color: #f0e9e9;
+    border: none;
+    border-radius: 12px;       
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;          
+    letter-spacing: 0.1em;
+    padding: 25px 30px;         
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4); 
+    transition: all 0.3s ease; 
+}
+
+button:hover {
+    background-color: #444bcc;  
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5); 
+}
+.buttons {
+    display: none;
+    position: absolute;
+    bottom: 10px;              
+    transform: translateX(-50%);
+    gap: 10px;       
+    margin-top: 12%;      
+}
+
+.card p:hover .buttons {
+    display: flex;
+}
