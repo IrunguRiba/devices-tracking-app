@@ -73,4 +73,16 @@ export class MainService {
 // eg: http://localhost:4000/api/devices/updateMyDevice/6918ea4bfae8516b93379e4c
 
 
+getAllDevices(): Observable<DeviceInfo[]> {
+    const token= localStorage.getItem('token')
+    const headers = {
+      Authorization: `Bearer ${token}`
+    };
+    const getAllDevicesUrl = ` http://localhost:4000/api/devices/getAllDevices`;
+    if (!token) {
+      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+   return EMPTY;
+    }
+    return this.http.get<DeviceInfo[]>(getAllDevicesUrl, {headers});
+  }
 }
