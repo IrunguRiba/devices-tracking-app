@@ -6,8 +6,8 @@
     <p class="device">
       <span class="device-name" *ngFor="let device of deviceName"> {{ device }}</span>      
       <span class="buttons">
-        <button class="btn">Remove</button>
-        <button class="btn">Report Lost</button>
+        <button class="btn" >Remove</button>
+        <button class="btn" (click)="goToAllDevicesMap()">Report Lost</button>
       </span>
     </p>
   </div>

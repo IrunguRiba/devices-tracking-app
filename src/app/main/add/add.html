@@ -9,6 +9,7 @@
             <div class="contact-info">
                 <p><strong>Email: {{ userInfo.email }}</strong></p>
                 <p><strong>Role: {{ userInfo.role }}</strong></p>
+                <p><strong>PIN: {{ userInfo.pin }}</strong></p>
             </div>
         </div>
     </div>
@@ -24,6 +25,7 @@
         <ul>
             <li *ngFor="let trackedDevice of userInfo.trackedDevices">
                 <p>{{ trackedDevice.deviceInfo }}</p>
+                <p><strong>PIN: {{ userInfo.pin }}</strong></p>
             </li>
         </ul>
     </div>

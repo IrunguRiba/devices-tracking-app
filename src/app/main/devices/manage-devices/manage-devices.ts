@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MainService } from './../../main-service';
 import { BackButton } from '../../../shared/back-button/back-button';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-devices',
@@ -16,7 +17,7 @@ export class ManageDevices implements OnInit {
   deviceName: any[] = [];
   @Output() deviceWithLocations: EventEmitter<any[]> = new EventEmitter<any[]>();
 
-  constructor(private mainService :MainService) { }
+  constructor(private mainService :MainService, private router:Router) { }
 
   ngOnInit():void{
     this.getAllDevicesForMap();
@@ -82,5 +83,8 @@ getAllDevicesForMap(){
         }
       });
 }
-
+goToAllDevicesMap(){
+this.router.navigate(['/all-map'])
+console.log("All devices mapped clicked")
+}
 }

@@ -1,21 +1,21 @@
+
 import { Component, AfterViewInit, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Leaflet from 'leaflet';
-import { MainService } from './../main/main-service';
-import { Location } from '../main/interfaces/location';
-
+import { MainService } from '../main-service';
+import { Location } from '../interfaces/location';
+import { ManageDevices } from '../devices/manage-devices/manage-devices';
 
 @Component({
-  selector: 'map',
-  templateUrl: './map.html',
-  imports: [CommonModule],
-styleUrls: ['./map.css'],
-  standalone: true,
+  selector: 'app-all-map',
+  imports: [ CommonModule, ManageDevices],
+  templateUrl: './all-map.html',
+  styleUrl: './all-map.css'
 })
-export class Map implements AfterViewInit {
- 
+export class AllMap implements AfterViewInit{
+
   
-   deviceLocations: any[] = [];
+  @Input() deviceLocations: any[] = [];
 
   updateDeviceLocations(devices: any[]) {
     this.deviceLocations = devices.map(d => {
@@ -28,8 +28,29 @@ export class Map implements AfterViewInit {
       
     });
     
+    if (this.map) {
+      this.addAllDeviceMarkers();
+    }
     console.log("All devices Mapped:", this.deviceLocations);
   }
+  
+  private addAllDeviceMarkers() {
+    this.deviceLocations.forEach((device, index) => {
+      Leaflet.circleMarker([device.latitude, device.longitude], {
+        radius: 10,
+        color: 'blue',      
+        fillColor: 'grey',  
+        fillOpacity:1
+      })
+      .bindPopup(`
+        <b>Device: ${device.name}</b><br>
+        Latitude: ${device.latitude}<br>
+        Longitude: ${device.longitude}
+      `)
+      .bindPopup(`<b>${device.name}</b>`).addTo(this.map);
+    });
+  }
+  
   
   latestLocation!: Location;
   devices: any[] = [];
@@ -181,6 +202,4 @@ export class Map implements AfterViewInit {
       this.map.setView([latest.latitude, latest.longitude], 18);
     }
   }
-
-
 }

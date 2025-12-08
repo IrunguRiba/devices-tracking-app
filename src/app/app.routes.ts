@@ -10,11 +10,13 @@ import {Notifications} from './main/notifications/notifications'
 import {About} from './home/about/about'
 import {SignIn} from './auth/sign-in/sign-in';
 import {ManageDevices} from './main/devices/manage-devices/manage-devices';
+import {AllMap} from '../app/main/all-map/all-map'
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'auth', component: Auth },
   { path: 'map', component: Map },
+  { path: 'all-map', component: AllMap },
   { path: 'about', component: About},
   {path: 'sign-in', component: SignIn},
   {path: 'manage-devices', component: ManageDevices},

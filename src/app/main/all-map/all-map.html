@@ -1,21 +1,21 @@
 <div id="map"></div>
 
 <hr>
-<h2 class="title">All Devices</h2>
+<h2 class="title">Closest Devices</h2>
 <div class="all-devices">
     <div *ngFor="let device of devices" 
          class="device-card" 
          [class.no-location]="device.locations.length === 0"
          (click)="goToLocation(device)">
       <h3>{{ device.name }}</h3>
-      <p><strong>First Seen:</strong> {{ device.firstSeen ? (device.firstSeen | date:'short') : 'No data' }}</p>
+      <p><strong>Closest:</strong> {{ device.firstSeen ? (device.firstSeen | date:'short') : 'No data' }}</p>
       <p><strong>Status:</strong> {{ device.status }}</p>
       <p><strong>Last Updated:</strong> {{ device.lastUpdated ? (device.lastUpdated | date:'short') : 'No data' }}</p>
       <p *ngIf="device.locations.length === 0" style="color:red;">Location unavailable</p>
     </div>
   </div>
 
-
+  <app-manage-devices (deviceWithLocations)="updateDeviceLocations($event)"></app-manage-devices>
 
 
   
