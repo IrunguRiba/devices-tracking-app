@@ -14,4 +14,11 @@
       <p *ngIf="device.locations.length === 0" style="color:red;">Location unavailable</p>
     </div>
   </div>
+
+  <app-manage-devices (deviceWithLocations)="updateDeviceLocations($event)"></app-manage-devices>
+
+
+  
+
+
   

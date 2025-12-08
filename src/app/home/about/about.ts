@@ -22,4 +22,27 @@ this.locationService.onIdentifyButtonClick()
     console.log('Home button clicked');
   }
 
+
+  popUpAbout(){
+
+  }
+
+  popUpLocation(){
+
+  }
+
+  popUpManage(){
+
+  }
+
+  popUpLostDevice(){
+
+  }
+
+  popUpTrack(){
+
+  }
+  popUpPrivacy(){
+    
+  }
 }

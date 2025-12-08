@@ -84,7 +84,7 @@ button {
     font-weight: bold;
     font-size: 1.2rem;          
     letter-spacing: 0.1em;
-    padding: 25px 30px;         
+    padding: 20px 20px;         
     box-shadow: 0 6px 12px rgba(0,0,0,0.4); 
     transition: all 0.3s ease; 
 }

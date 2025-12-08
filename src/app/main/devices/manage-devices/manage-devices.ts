@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MainService } from './../../main-service';
 import { BackButton } from '../../../shared/back-button/back-button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-manage-devices',
-  imports: [ BackButton],
+  imports: [ BackButton, CommonModule],
 templateUrl: './manage-devices.html',
   styleUrl: './manage-devices.css'
 })
 export class ManageDevices implements OnInit {
 
   devices: any[] = [];
+  devicesForManagement: any[] = [];
+  deviceName: any[] = [];
+  @Output() deviceWithLocations: EventEmitter<any[]> = new EventEmitter<any[]>();
 
   constructor(private mainService :MainService) { }
 
   ngOnInit():void{
     this.getAllDevicesForMap();
+    this. existingDeviceCheck() 
   }
 
   existingDeviceCheck() {
@@ -24,7 +29,14 @@ export class ManageDevices implements OnInit {
 
     this.mainService.getUserById(userId).subscribe({
       next: (data: any) => {
-        console.log('User data fetched for device management:', data);
+        console.log('User data fetched for device management:', data.user.firstName+" " +data.user.lastName);
+        this.devicesForManagement=data.user.deviceInfo || []
+        this.deviceName=this.devicesForManagement.map((names)=>names.name)
+
+
+        console.log('Devices data fetched for device management:', this.devicesForManagement );
+        console.log('Device names data fetched for device management:', this.deviceName );
+
       },
       error: (error: any) => {
         console.error('Error fetching user data:', error);
@@ -59,8 +71,8 @@ getAllDevicesForMap(){
               }))
             };
           });
-        
-        console.log("Devices with location: ", devicesWithLocation);
+          this.deviceWithLocations.emit(devicesWithLocation);
+          console.log("Devices with locations for mapping: ", devicesWithLocation);
         },        
         error: (error: any) => {
           console.error('Error fetching Devices data for map:', error);

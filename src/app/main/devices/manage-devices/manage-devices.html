@@ -4,7 +4,7 @@
     <h1 id="title">My current Devices</h1>
   
     <p class="device">
-      <span class="device-name">I-Phone 12 pro max</span>
+      <span class="device-name" *ngFor="let device of deviceName"> {{ device }}</span>      
       <span class="buttons">
         <button class="btn">Remove</button>
         <button class="btn">Report Lost</button>

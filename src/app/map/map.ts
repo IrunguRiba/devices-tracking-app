@@ -1,19 +1,58 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Leaflet from 'leaflet';
 import { MainService } from './../main/main-service';
 import { Location } from '../main/interfaces/location';
+import { ManageDevices } from '../main/devices/manage-devices/manage-devices';
+
 
 @Component({
   selector: 'map',
   templateUrl: './map.html',
-  imports: [CommonModule],
-  styleUrls: ['./map.css'],
+  imports: [CommonModule, ManageDevices],
+styleUrls: ['./map.css'],
   standalone: true,
 })
 export class Map implements AfterViewInit {
+ 
+  
+  @Input() deviceLocations: any[] = [];
 
-  deviceLocations: Location[] = [];
+  updateDeviceLocations(devices: any[]) {
+    this.deviceLocations = devices.map(d => {
+      const latestLoc = d.location[d.location.length - 1]; 
+      return {
+        latitude: latestLoc.latitude,
+        longitude: latestLoc.longitude,
+        name: d.name
+      };
+      
+    });
+    
+    if (this.map) {
+      this.addAllDeviceMarkers();
+    }
+    console.log("All devices Mapped:", this.deviceLocations);
+  }
+  
+  private addAllDeviceMarkers() {
+    this.deviceLocations.forEach((device, index) => {
+      Leaflet.circleMarker([device.latitude, device.longitude], {
+        radius: 10,
+        color: 'blue',      
+        fillColor: 'grey',  
+        fillOpacity:1
+      })
+      .bindPopup(`
+        <b>Device: ${device.name}</b><br>
+        Latitude: ${device.latitude}<br>
+        Longitude: ${device.longitude}
+      `)
+      .bindPopup(`<b>${device.name}</b>`).addTo(this.map);
+    });
+  }
+  
+  
   latestLocation!: Location;
   devices: any[] = [];
   lastUpdated: any[] = [];
@@ -22,7 +61,6 @@ export class Map implements AfterViewInit {
   private map!: Leaflet.Map;
 
   constructor(private mainService: MainService) {}
-
   ngAfterViewInit(): void {
     this.getAllDevices();
   }
@@ -165,4 +203,6 @@ export class Map implements AfterViewInit {
       this.map.setView([latest.latitude, latest.longitude], 18);
     }
   }
+
+
 }

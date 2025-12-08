@@ -78,7 +78,7 @@ getAllDevices(): Observable<DeviceInfo[]> {
     const headers = {
       Authorization: `Bearer ${token}`
     };
-    const getAllDevicesUrl = ` http://localhost:4000/api/devices/getAllDevices`;
+    const getAllDevicesUrl = `https://tracking-app-backend-g3al.onrender.com/api/devices/getAllDevices`;
     if (!token) {
       window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
    return EMPTY;
