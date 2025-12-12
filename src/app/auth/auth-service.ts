@@ -47,7 +47,7 @@ token=''
       switchMap((tokenResponse:any) => {
         console.log('Token received:', tokenResponse.token);
         localStorage.setItem('token', tokenResponse.token);
-        return this.http.post<User>(`${this.baseUrlLocalHost}/signBack`, payload);
+        return this.http.post<User>(`${this.baseUrl}/signBack`, payload);
       }),
       catchError((error: any) => {
         console.error('Login error:', error);
