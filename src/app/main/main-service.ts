@@ -30,6 +30,9 @@ export class MainService {
   
   getUserById(_id: string): Observable<User> {
   const token= localStorage.getItem('token')
+  if (!token) {
+    console.log('Token not found');
+  }
     const headers = {
       Authorization: `Bearer ${token}`
     };

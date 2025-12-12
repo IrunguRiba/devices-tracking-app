@@ -47,13 +47,16 @@ export class SignIn {
       const user = this.loginForm.value;
       this.loading = true;
   
-      this.authService.logInUser(user).subscribe({
+      this.authService.signInUser(user).subscribe({
         next: (response: any) => {
           console.log('Log in success', response);
   
           if (response && response.user && response.user._id) {
             console.log('User stored successfully:', response.user);
           }
+          console.log('token', response.token)
+          localStorage.setItem('userId', response.user._id);
+          localStorage.setItem('user', JSON.stringify(response.user));
   
           if (response.user?.deviceInfo?.length > 0) {
             this.router.navigate(['/main/dashboard']);

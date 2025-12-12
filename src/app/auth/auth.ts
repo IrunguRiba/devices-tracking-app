@@ -100,7 +100,7 @@ export class Auth {
             console.log('token', response.token)
             localStorage.setItem('userId', response.user._id);
             localStorage.setItem('user', JSON.stringify(response.user));
-      console.log('User stored successfully:', response.user);
+      console.log('User stored successfully:', response);
           }
           this.loading=true;
           this.router.navigate(['/main']);

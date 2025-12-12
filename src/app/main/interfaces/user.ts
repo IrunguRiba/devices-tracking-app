@@ -12,6 +12,7 @@ export interface User {
     role: string;
     isAdmin: boolean;
     pin?: string;
+    token?:string;
     deviceInfo: DeviceInfo[];
     trackedDevices: TrackedDevice[];
     __v?: number;
