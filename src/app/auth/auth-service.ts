@@ -47,6 +47,7 @@ token=''
       switchMap((tokenResponse:any) => {
         console.log('Token received:', tokenResponse.token);
         localStorage.setItem('token', tokenResponse.token);
+        localStorage.setItem('userId', tokenResponse.userId)
        const headers={
         Authorization: `Bearer ${tokenResponse.token}`
        }
