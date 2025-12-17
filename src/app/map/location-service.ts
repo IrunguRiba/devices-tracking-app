@@ -47,9 +47,6 @@ export class LocationService {
 
     } catch (error) {
       console.error('Error fetching visitor data:', error);
-      this.visitorId = `fallback-${Date.now()}`;
-      localStorage.setItem('visitorId', this.visitorId);
-      console.warn('Fallback visitorId generated:', this.visitorId);
     }
   }
   getLocation(device: DeviceInfo): Observable<DeviceInfo> {
@@ -99,7 +96,7 @@ export class LocationService {
               }
             },
             (error) => console.error('Error watching location changes:', error),
-            { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+            { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 }
           );
         });
       },
