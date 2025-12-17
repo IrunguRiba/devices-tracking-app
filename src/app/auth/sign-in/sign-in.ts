@@ -66,7 +66,7 @@ export class SignIn {
           console.log("Matching visitorId found:", deviceHasMatchingVisitorId);
           console.log("Matching visitorId found: Redirect!!");
   
-          if (deviceHasMatchingVisitorId) {
+          if (deviceHasMatchingVisitorId && response.user.deviceInfo?.length>0) {
             this.router.navigate(['/main/dashboard']);
           } else {
             this.router.navigate(['/main/devices']);
