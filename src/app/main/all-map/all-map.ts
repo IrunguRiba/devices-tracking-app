@@ -1,5 +1,4 @@
-
-import { Component, AfterViewInit, Input, Output } from '@angular/core';
+import { Component, AfterViewInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Leaflet from 'leaflet';
 import { MainService } from '../main-service';
@@ -8,106 +7,86 @@ import { ManageDevices } from '../devices/manage-devices/manage-devices';
 
 @Component({
   selector: 'app-all-map',
-  imports: [ CommonModule, ManageDevices],
+  imports: [CommonModule, ManageDevices],
   templateUrl: './all-map.html',
-  styleUrl: './all-map.css'
+  styleUrls: ['./all-map.css'] // fixed property name
 })
-export class AllMap implements AfterViewInit{
-
-  
+export class AllMap implements AfterViewInit {
   @Input() deviceLocations: any[] = [];
+  surroundingDevices: any[] = []; // for other devices around
 
+  latestLocation!: Location;
+  devices: any[] = [];
+
+  private map!: Leaflet.Map;
+  private currentMarkers: (Leaflet.Marker | Leaflet.CircleMarker)[] = [];
+  private currentPolyline!: Leaflet.Polyline;
+
+  constructor(private mainService: MainService) {}
+
+  ngAfterViewInit(): void {
+    this.getAllDevices();
+  }
+
+  // Update surrounding devices without removing my devices
   updateDeviceLocations(devices: any[]) {
-    this.deviceLocations = devices.map(d => {
-      const latestLoc = d.location[d.location.length - 1]; 
+    this.surroundingDevices = devices.map(d => {
+      const latestLoc = d.location[d.location.length - 1];
       return {
         latitude: latestLoc.latitude,
         longitude: latestLoc.longitude,
         name: d.name
       };
-      
     });
-    
-    if (this.map) {
-      this.addAllDeviceMarkers();
-    }
-    console.log("All devices Mapped:", this.deviceLocations);
+
+    if (this.map) this.addAllDeviceMarkers();
+    console.log('All surrounding devices mapped:', this.surroundingDevices);
   }
-  
+
   private addAllDeviceMarkers() {
-    this.deviceLocations.forEach((device, index) => {
+    this.surroundingDevices.forEach(device => {
       Leaflet.circleMarker([device.latitude, device.longitude], {
         radius: 10,
-        color: 'blue',      
-        fillColor: 'grey',  
-        fillOpacity:1
+        color: 'green',
+        fillColor: 'pink',
+        fillOpacity: 1
       })
-      .bindPopup(`
-        <b>Device: ${device.name}</b><br>
-        Latitude: ${device.latitude}<br>
-        Longitude: ${device.longitude}
-      `)
-      .bindPopup(`<b>${device.name}</b>`).addTo(this.map);
+      .bindPopup(`<b>${device.name}</b><br>Lat: ${device.latitude}, Lng: ${device.longitude}`)
+      .addTo(this.map);
     });
-  }
-  
-  
-  latestLocation!: Location;
-  devices: any[] = [];
-  lastUpdated: any[] = [];
-  name:[] = [];
-
-  private map!: Leaflet.Map;
-
-  constructor(private mainService: MainService) {}
-  ngAfterViewInit(): void {
-    this.getAllDevices();
   }
 
   getAllDevices() {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-      console.error("User ID not found in localStorage");
+      console.error('User ID not found in localStorage');
       return;
     }
 
     this.mainService.getUserById(userId).subscribe({
       next: (data: any) => {
-        console.log("API RESPONSE:", data);
+        if (!data.user || !Array.isArray(data.user.deviceInfo)) return;
 
-        if (!data.user || !Array.isArray(data.user.deviceInfo)) {
-          console.error("Invalid response: deviceInfo missing");
-          return;
-        }
         this.devices = data.user.deviceInfo.map((device: any) => {
-          const location = Array.isArray(device.location) ? device.location : [];
-          const firstSeen = location.length > 0 ? location[0].timestamp : null;
-          const lastSeen = location.length > 0 ? location[location.length - 1].timestamp : null;
-
+          const locations = Array.isArray(device.location) ? device.location : [];
           return {
-            name: device.model || device.name || "Unknown Device",
-            status: device.status || "Unknown",
-            firstSeen: firstSeen,
-            lastSeen: lastSeen,
-            lastUpdated: lastSeen,
-            locations: location  
+            name: device.model || device.name || 'Unknown Device',
+            status: device.status || 'Unknown',
+            locations
           };
         });
-        const deviceWithLocation = this.devices.find(d => d.locations.length > 0);
-        if (deviceWithLocation) {
-          this.deviceLocations = deviceWithLocation.locations;
-          this.latestLocation = deviceWithLocation.locations[deviceWithLocation.locations.length - 1];
 
-          this.initializeMap();
-          this.addTileLayers();
-          this.addDeviceRoute();
-          this.addStartLocationMarker();
-          this.addLatestLocationMarker();
-        } else {
-          console.warn("No device has location to show on the map.");
-        }
+        const firstDevice = this.devices.find(d => d.locations.length > 0);
+        if (!firstDevice) return console.warn('No device has location');
+
+        this.deviceLocations = firstDevice.locations;
+        this.latestLocation = firstDevice.locations[firstDevice.locations.length - 1];
+
+        this.initializeMap();
+        this.addTileLayers();
+        this.drawDeviceOnMap(firstDevice);
       },
-      error: (err: any) => console.log("Error fetching devices:", err)
+      error:( err:any) => console.error('Error fetching devices:', err)
     });
   }
 
@@ -122,84 +101,55 @@ export class AllMap implements AfterViewInit{
   private addTileLayers() {
     const mapTilerLayer = Leaflet.tileLayer(
       'https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=j5Ji1JRhCQUrFSHI1dq4',
-      {
-        attribution: '© MapTiler © OSM',
-        tileSize: 512,
-        zoomOffset: -1,
-        maxZoom: 20
-      }
+      { attribution: '© MapTiler © OSM', tileSize: 512, zoomOffset: -1, maxZoom: 20 }
     );
     const osmLayer = Leaflet.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap contributors'
-      }
+      { maxZoom: 19, attribution: '© OpenStreetMap contributors' }
     );
     mapTilerLayer.addTo(this.map);
-    Leaflet.control.layers({
-      "MapTiler Streets": mapTilerLayer,
-      "OpenStreetMap": osmLayer
-    }).addTo(this.map);
+    Leaflet.control.layers({ 'MapTiler Streets': mapTilerLayer, OpenStreetMap: osmLayer }).addTo(this.map);
   }
 
-  private addDeviceRoute() {
-    const coordinates = this.deviceLocations.map(
-      loc => [loc.latitude, loc.longitude] as [number, number]
-    );
+  private drawDeviceOnMap(device: any) {
+    if (!device.locations || device.locations.length === 0) return;
 
-    const polyline = Leaflet.polyline(coordinates, {
-      color: 'yellow',
-      weight: 5,
-      opacity: 0.8
-    }).addTo(this.map);
+    // Clear previous my device markers but keep surrounding devices
+    this.currentMarkers.forEach(m => this.map.removeLayer(m));
+    this.currentMarkers = [];
+    if (this.currentPolyline) this.map.removeLayer(this.currentPolyline);
 
-    this.map.fitBounds(polyline.getBounds(), { padding: [40, 40] });
-  }
+    this.deviceLocations = device.locations;
+    this.latestLocation = device.locations[device.locations.length - 1];
 
-  private addStartLocationMarker() {
-    const start = this.deviceLocations[0];
-    const deviceName = this.devices.length > 0 ? this.devices[0].name : "Unknown Device";
+    const coords = device.locations.map((loc: any) => [loc.latitude, loc.longitude] as [number, number]);
+    this.currentPolyline = Leaflet.polyline(coords, { color: 'yellow', weight: 5, opacity: 0.8 }).addTo(this.map);
+    this.map.fitBounds(this.currentPolyline.getBounds(), { padding: [40, 40] });
 
-    const startIcon = new Leaflet.Icon({
-      iconSize: [50, 41],
-      iconAnchor: [25, 41],
-      iconUrl: '/startLocation.png'
-    });
-
-    Leaflet.marker([start.latitude, start.longitude], { icon: startIcon })
-      .bindPopup(`<b>${deviceName}</b><br>At: ${start.latitude}, ${start.longitude}`)
+    const startIcon = new Leaflet.Icon({ iconSize: [50,41], iconAnchor: [25,41], iconUrl: '/startLocation.png' });
+    const startMarker = Leaflet.marker([device.locations[0].latitude, device.locations[0].longitude], { icon: startIcon })
+      .bindPopup(`<b>${device.name}</b><br>Start: ${device.locations[0].latitude}, ${device.locations[0].longitude}`)
       .addTo(this.map);
-  }
+    this.currentMarkers.push(startMarker);
 
-  private addLatestLocationMarker() {
-    const latest = this.latestLocation;
-    const deviceName = this.devices.length > 0 ? this.devices[0].name : "Unknown Device";
-
-    const icon = new Leaflet.Icon({
-      iconSize: [50, 41],
-      iconAnchor: [25, 41],
-      iconUrl: '/location.png'
-    });
-
-    Leaflet.marker([latest.latitude, latest.longitude], { icon })
-      .bindPopup(`<b>${deviceName}</b><br>At: ${latest.latitude}, ${latest.longitude}`)
+    const latestIcon = new Leaflet.Icon({ iconSize: [50,41], iconAnchor: [25,41], iconUrl: '/location.png' });
+    const latestMarker = Leaflet.marker([this.latestLocation.latitude, this.latestLocation.longitude], { icon: latestIcon })
+      .bindPopup(`<b>${device.name}</b><br>Latest: ${this.latestLocation.latitude}, ${this.latestLocation.longitude}`)
       .addTo(this.map)
       .openPopup();
+    this.currentMarkers.push(latestMarker);
 
-    Leaflet.circleMarker([latest.latitude, latest.longitude], {
+    const circle = Leaflet.circleMarker([this.latestLocation.latitude, this.latestLocation.longitude], {
       radius: 25,
       color: 'green',
       fillColor: 'green',
       fillOpacity: 0.5,
       className: 'blinking-circle'
     }).addTo(this.map);
+    this.currentMarkers.push(circle);
   }
 
   goToLocation(device: any) {
-    if (device.locations && device.locations.length > 0) {
-      const latest = device.locations[device.locations.length - 1];
-      this.map.setView([latest.latitude, latest.longitude], 18);
-    }
+    this.drawDeviceOnMap(device);
   }
 }

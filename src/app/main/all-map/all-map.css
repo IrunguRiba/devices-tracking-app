@@ -6,14 +6,17 @@
     margin-bottom: 30px;
     transition: all 0.3s ease;
   }
-  .blinking-circle {
-    animation: blink 1s infinite;
-  }
+.blinking-circle path {
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
   
-  @keyframes blink {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0; }
-  }
   #map {
     height: 60vh;
     width: 100%;

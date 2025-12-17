@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MainService} from '../main-service'
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add',
   imports: [CommonModule],
@@ -12,7 +12,7 @@ export class Add implements OnInit{
 
   userInfo: any={}
  
-  constructor(private mainService:MainService){}
+  constructor(private mainService:MainService, private router: Router){}
 
 ngOnInit(){
 this.getUserInfo()
@@ -38,5 +38,9 @@ console.log(error)
       complete: ()=>{console.log("User profile retrieved")}
         });
 
+}
+
+logout(){
+this.router.navigate(['/about'])
 }
 }

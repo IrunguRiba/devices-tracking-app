@@ -3,8 +3,8 @@
 <div class="card">
     <h1 id="title">My current Devices</h1>
   
-    <p class="device">
-      <span class="device-name" *ngFor="let device of deviceName"> {{ device }}</span>      
+    <p class="device" *ngFor="let device of deviceName"> 
+      <span class="device-name">{{ device }}</span>      
       <span class="buttons">
         <button class="btn" >Remove</button>
         <button class="btn" (click)="goToAllDevicesMap()">Report Lost</button>

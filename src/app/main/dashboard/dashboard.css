@@ -38,8 +38,19 @@ body, html {
     padding: 20px;
     scroll-behavior: smooth;
     white-space: nowrap; 
+    display: flex;
+  box-sizing: border-box;
   }
-  
+  .wrapper::-webkit-scrollbar {
+    height: 8px;
+  }
+  .wrapper::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.3);
+    border-radius: 4px;
+  }
+  .wrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
   .card {
     width: 250px;
     height: 460px;
