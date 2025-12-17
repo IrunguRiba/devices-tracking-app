@@ -1,48 +1,51 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { LocationService } from '../../map/location-service';
 
 @Component({
   selector: 'app-about',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './about.html',
-  styleUrl: './about.css'
+  styleUrls: ['./about.css']
 })
-
 export class About implements OnInit {
-  constructor(private router: Router, private locationService: LocationService) {}
 
+  trackbypin='/trackbypin.png';
+  realtimetrack='/realtimetrack.png';
+  privacy='/privacy.png';
+  manage='/manage.png';
+  livelocation='/livelocation.png';
+  about='/about.png';
 
-  ngOnInit(){
-this.locationService.onIdentifyButtonClick()
-}
+  activePopup: string | null = null;
 
-  goToAuth(){
+  constructor(
+    private router: Router,
+    private locationService: LocationService
+  ) {}
+
+  ngOnInit(): void {
+    this.locationService.onIdentifyButtonClick();
+  }
+
+  goToAuth(): void {
     this.router.navigate(['/sign-in']);
-    console.log('Home button clicked');
   }
 
-
-  popUpAbout(){
-
+  closePopup(): void {
+    this.activePopup = null;
   }
 
-  popUpLocation(){
-
+  togglePopup(name: string): void {
+    this.activePopup = this.activePopup === name ? null : name;
   }
 
-  popUpManage(){
-
-  }
-
-  popUpLostDevice(){
-
-  }
-
-  popUpTrack(){
-
-  }
-  popUpPrivacy(){
-    
-  }
+  popUpAbout() { this.togglePopup('about'); }
+  popUpLocation() { this.togglePopup('location'); }
+  popUpManage() { this.togglePopup('manage'); }
+  popUpLostDevice() { this.togglePopup('lost'); }
+  popUpTrack() { this.togglePopup('track'); }
+  popUpPrivacy() { this.togglePopup('privacy'); }
 }

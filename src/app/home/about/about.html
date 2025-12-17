@@ -1,84 +1,120 @@
 <div class="aboutPage">
 
-<nav class="navigationContainer">
+  <nav class="navigationContainer">
     <a id="freeTrialBtn" (click)="goToAuth()">Sign in</a>
-</nav>
-</div>
+  </nav>
 
-<div class="logo">
+  <div class="logo">
+    <div class="logoCircle">
+      <span>◆</span>
+    </div>
+  </div>
 
-</div>
+  <div class="contents">
+    <h1>I-TRACK</h1>
+    <p>
+      A secure device tracking platform<br />
+      Track •  Manage • Recover
+    </p>
+  </div>
 
-<div class="contents">
+  <div class="divider"></div>
 
+  <div class="navigations">
+    <ul>
+      <li (click)="popUpAbout()">About</li>
+      <li (click)="popUpLocation()">Live Location</li>
+      <li (click)="popUpManage()">Manage Device</li>
+      <li (click)="popUpLostDevice()">Lost Device</li>
+      <li (click)="popUpTrack()">Track by PIN</li>
+      <li (click)="popUpPrivacy()">Privacy</li>
+    </ul>
+  </div>
 
-</div>
-
-
-<div class="navigations">
-<ul>
-    <li (click)="popUpAbout()">About </li>
-    <li (click)="popUpLocation()">Live Location</li>
-    <li (click)="popUpManage()">Manage Device</li>
-    <li (click)="popUpLostDevice()">Lost Device</li>
-    <li (click)="popUpTrack()">Track by PIN</li>
-    <li (click)="popUpPrivacy()" >Privacy</li>
-</ul>
-
-</div>
-
-<footer>
+  <footer>
     <p>&copy; 2024 I-TRACK. All rights reserved.</p>
   </footer>
 
+</div>
+<div
+  class="popup"
+  [class.active]="activePopup === 'about'"
+  (click)="closePopup()"
+>
+<img [src]="about" alt="About Icon" class="infoIcon" />
+<div class="divider"></div>
+  <p (click)="$event.stopPropagation()">
+    Welcome to the Device Tracking App.<br><br>
+    Track devices in real-time, manage them securely,
+    and recover lost devices with ease.
+  </p>
+</div>
+<div
+  class="popup"
+  [class.active]="activePopup === 'location'"
+  (click)="closePopup()"
+>
+<img [src]="realtimetrack" alt="Live Location Icon" class="infoIcon" />
+<div class="divider"></div>
+  <p (click)="$event.stopPropagation()">
+    View real-time locations of tracked devices.<br><br>
+    See live coordinates and full travel routes on the map.
+  </p>
+</div>
+<div
+  class="popup"
+  [class.active]="activePopup === 'manage'"
+  (click)="closePopup()"
+>
+<img [src]="manage" alt="Manage Device Icon" class="infoIcon" />
+<div class="divider"></div>
+  <p (click)="$event.stopPropagation()">
+    Manage your devices:<br><br>
+    • Register devices<br>
+    • Update device details<br>
+    • Delete devices safely<br>
+    • Track using a device PIN
+  </p>
+</div>
 
-<div class="aboutPopUp">
-    <p>
-      Welcome to the Device Tracking App!<br>
-      Explore features like adding devices, tracking them in real-time, and managing your account.<br>
-      Click "Explore" to learn more or start using the app.
-    </p>
-  </div>
-  
-  <div class="locationPopUp">
-    <p>
-      This popup shows the latest location information of your tracked devices.<br>
-      Locations are updated in real-time once the device is being tracked.<br>
-      You can see start-to-end routes or latest coordinates on the map.
-    </p>
-  </div>
-  
-  <div class="managePopUp">
-    <p>
-      Here you can manage your devices:<br>
-      - Register a new device<br>
-      - Update device details<br>
-      - Delete devices without removing your account<br>
-      - Track other users' devices using the device PIN
-    </p>
-  </div>
-  
-  <div class="lostDevicePopUp">
-    <p>
-      If your device is lost, register it as lost here.<br>
-      You will be able to track its location once someone accesses it.<br>
-      Ensure your device PIN is ready to activate tracking.
-    </p>
-  </div>
-  
-  <div class="trackPopUp">
-    <p>
-      Enter the device PIN of the device you want to track.<br>
-      Remember: you cannot track the same device twice.<br>
-      Once tracked, you will see its live location on the map.
-    </p>
-  </div>
-  
-  <div class="privacyPopUp">
-    <p>
-      We respect your privacy. Device and location data are stored securely.<br>
-      Only registered users can access device tracking data.<br>
-      You can delete your devices or account at any time.
-    </p>
-  </div>
-  
+<div
+  class="popup"
+  [class.active]="activePopup === 'lost'"
+  (click)="closePopup()"
+>
+<img [src]="realtimetrack" alt="Privacy Icon" class="infoIcon" />
+<div class="divider"></div>
+  <p (click)="$event.stopPropagation()">
+    Mark your device as lost.<br><br>
+    Once accessed, tracking activates automatically
+    using your registered device PIN.
+  </p>
+</div>
+
+<div
+  class="popup"
+  [class.active]="activePopup === 'track'"
+  (click)="closePopup()"
+>
+<img [src]="trackbypin" alt="Privacy Icon" class="infoIcon" />
+<div class="divider"></div>
+  <p (click)="$event.stopPropagation()">
+    Enter a device PIN to start tracking.<br><br>
+    A device can only be tracked once
+    to prevent duplicate sessions.
+  </p>
+</div>
+<div
+  class="popup"
+  [class.active]="activePopup === 'privacy'"
+  (click)="closePopup()"
+>
+
+<img [src]="privacy" alt="Privacy Icon" class="infoIcon" />
+<div class="divider"></div>
+  <p (click)="$event.stopPropagation()">
+    Your privacy matters.<br><br>
+    All device and location data is encrypted.
+    You can remove devices or delete your account anytime.
+  </p>
+</div>
