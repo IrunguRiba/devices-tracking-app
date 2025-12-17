@@ -140,7 +140,5 @@ export class Devices implements OnInit {
     this.router.navigate(['/map']);
   }
 
-  redirectToDashboard(){
-    this.router.navigate(['/main/dashboard']);
-  }
+ 
 }
