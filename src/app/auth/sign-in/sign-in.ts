@@ -41,6 +41,7 @@ export class SignIn {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
   }
   onLogInUser() {
     if (this.loginForm.valid) {
@@ -57,8 +58,14 @@ export class SignIn {
           console.log('token', response.token)
           localStorage.setItem('userId', response.user._id);
           localStorage.setItem('user', JSON.stringify(response.user));
+
+          const visitorIdVerification = localStorage.getItem('visitorId');
+          console.log("New visitor ID from localStorage:", visitorIdVerification);
+          const deviceHasMatchingVisitorId = response.user.deviceInfo?.some((device: DeviceInfo) => device.visitorId === visitorIdVerification);
+        
+          console.log("Matching visitorId found:", deviceHasMatchingVisitorId);
   
-          if (response.user?.deviceInfo?.length > 0) {
+          if (deviceHasMatchingVisitorId) {
             this.router.navigate(['/main/dashboard']);
           } else {
             this.router.navigate(['/main/devices']);
