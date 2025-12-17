@@ -125,11 +125,11 @@
 
 footer {
     position: fixed;
-    bottom: 15%;
+    bottom: 13%;
     width: 100%;
     text-align: center;
-    font-size: 10px;
-    color: white;
+    font-size: 20px;
+    color: rgb(197, 151, 98);
     opacity: 0.6;
 }
    .popup {
