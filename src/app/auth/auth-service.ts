@@ -41,7 +41,7 @@ token=''
       password: user.password,
     };
     return this.http.post<{ token: string; message: string, userId: string }>(
-      `${this.baseUrlLocalHost}/userByEmail`,
+      `${this.baseUrl}/userByEmail`,
       { email: user.email }
     ).pipe(
       switchMap((tokenResponse:any) => {
