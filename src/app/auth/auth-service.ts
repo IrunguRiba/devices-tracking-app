@@ -35,30 +35,19 @@ token=''
 
   signInUser(user: User): Observable<User> {
     console.log("Logging in user...");
-  
     const payload = {
       email: user.email,
       password: user.password,
     };
-    return this.http.post<{ token: string; message: string, userId: string }>(
-      `${this.baseUrl}/userByEmail`,
-      { email: user.email }
-    ).pipe(
-      switchMap((tokenResponse:any) => {
-        console.log('Token received:', tokenResponse.token);
-        localStorage.setItem('token', tokenResponse.token);
-        localStorage.setItem('userId', tokenResponse.userId)
-       const headers={
-        Authorization: `Bearer ${tokenResponse.token}`
-       }
-        return this.http.post<User>(`${this.baseUrl}/signBack`, payload, {headers});
-      }),
-      catchError((error: any) => {
-        console.error('Login error:', error);
-        return throwError(() => error);
-      })
-    );
+        return this.http.post<User>(`${this.baseUrl}/userLogIn`, payload);
+    
   }
   
-
+  setToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+  
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
 }

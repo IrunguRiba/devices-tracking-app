@@ -56,9 +56,10 @@ export class SignIn {
             console.log('User stored successfully:', response.user);
           }
           console.log('token', response.token)
+          this.authService.setToken(response.token);
+          localStorage.setItem('authToken', response.token);
           localStorage.setItem('userId', response.user._id);
-          localStorage.setItem('user', JSON.stringify(response.user));
-
+    
           const visitorIdVerification = localStorage.getItem('visitorId');
           console.log("New visitor ID from localStorage:", visitorIdVerification);
           const deviceHasMatchingVisitorId = response.user.deviceInfo?.some((device: DeviceInfo) => device.visitorId === visitorIdVerification);
