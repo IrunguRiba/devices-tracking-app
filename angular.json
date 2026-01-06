@@ -27,7 +27,7 @@
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
-                "output": "public/leaflet/images"
+                "output": "tracking-app/public/leaflet/images"
               }
             ],
             "styles": [
