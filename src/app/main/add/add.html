@@ -1,4 +1,11 @@
-<div class="user-container">
+<div class="loading-container">
+
+    <app-spining-loader *ngIf="loading"></app-spining-loader>
+</div>
+
+
+
+<div class="user-container" *ngIf="!loading">
     <div class="profile-header">
         <div class="user-details">
             <p class="username"><strong>UserName: {{ userInfo.userName }}</strong></p>
@@ -16,6 +23,7 @@
 
     <div class="device-info" *ngIf="userInfo.deviceInfo?.length">
         <div class="device-box">
+          
             <h3 class="info-title">Number of Devices: <span>{{ userInfo.deviceInfo?.length }}</span></h3>
         </div>
     </div>

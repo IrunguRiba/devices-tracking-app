@@ -1,8 +1,12 @@
+<div class="loading-container">
+
+  <app-spining-loader *ngIf="loading"></app-spining-loader>
+</div>
 
 <h1 class="title">Registred Devices</h1>
 
 
-<div class="wrapper">
+<div class="wrapper" *ngIf="!loading">
     <div class="card" *ngFor="let device of devices">
       <button class="absolute-upload-btn" (click)="fileInput.click()">
         <img [src]="uploadPic" alt="Upload" class="upload-icon">

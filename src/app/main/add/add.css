@@ -68,3 +68,15 @@ margin-top: 10%;
     transform: scale(1.05);
   }
   
+  .loading-container {
+    position: fixed;
+    inset: 0;                
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    margin-top: -50%;
+    margin-right: 30%;
+    pointer-events: none;
+  }
+  

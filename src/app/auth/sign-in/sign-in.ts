@@ -16,11 +16,12 @@ import Swal from 'sweetalert2';
 import { LoadingSpinner } from '../../loading-spinner/loading-spinner';
 import { MainService } from '../../main/main-service';
 import { HttpClient } from '@angular/common/http';
+import { BackButton } from '../../shared/back-button/back-button';
 
 
 @Component({
   selector: 'app-sign-in',
-  imports: [ReactiveFormsModule, HttpClientModule, CommonModule, LoadingSpinner],
+  imports: [ReactiveFormsModule, HttpClientModule, CommonModule, LoadingSpinner, BackButton],
   templateUrl: './sign-in.html',
   styleUrls: ['./sign-in.css']
 })
@@ -50,22 +51,18 @@ export class SignIn {
   
       this.authService.signInUser(user).subscribe({
         next: (response: any) => {
-          console.log('Log in success', response);
-  
+        
           if (response && response.user && response.user._id) {
-            console.log('User stored successfully:', response.user);
-          }
-          console.log('token', response.token)
+          
           this.authService.setToken(response.token);
           localStorage.setItem('authToken', response.token);
           localStorage.setItem('userId', response.user._id);
-    
+          }
           const visitorIdVerification = localStorage.getItem('visitorId');
-          console.log("New visitor ID from localStorage:", visitorIdVerification);
+         
           const deviceHasMatchingVisitorId = response.user.deviceInfo?.some((device: DeviceInfo) => device.visitorId === visitorIdVerification);
         
-          console.log("Matching visitorId found:", deviceHasMatchingVisitorId);
-          console.log("Matching visitorId found: Redirect!!");
+        
   
           if (deviceHasMatchingVisitorId) {
             this.router.navigate(['/main/dashboard']);
@@ -89,7 +86,6 @@ export class SignIn {
         
         complete: () => {
           this.loading = false;
-          console.log('Login request completed');
         },
       });
     } else {
@@ -99,6 +95,5 @@ export class SignIn {
 
   goToAuth() {
     this.router.navigate(['/auth']);
-    console.log('Sign in button clicked');
   }
 }

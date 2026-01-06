@@ -3,19 +3,22 @@ import { MainService } from './../../main-service';
 import { BackButton } from '../../../shared/back-button/back-button';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import {SpiningLoader} from '../../../shared/spining-loader/spining-loader'
 
 @Component({
   selector: 'app-manage-devices',
-  imports: [ BackButton, CommonModule],
+  imports: [ BackButton, CommonModule, SpiningLoader],
 templateUrl: './manage-devices.html',
   styleUrl: './manage-devices.css'
 })
 export class ManageDevices implements OnInit {
-
+  loading=false;
   devices: any[] = [];
   devicesForManagement: any[] = [];
   deviceName: any[] = [];
+  closestDevices: any[] = [];
   @Output() deviceWithLocations: EventEmitter<any[]> = new EventEmitter<any[]>();
+
 
   constructor(private mainService :MainService, private router:Router) { }
 
@@ -25,24 +28,25 @@ export class ManageDevices implements OnInit {
   }
 
   existingDeviceCheck() {
+    this.loading=true;
     const userId = localStorage.getItem('userId') || '';
-    if (!userId) return;
+    if (!userId) {
+      this.loading=false;
+      return
+    };
 
     this.mainService.getUserById(userId).subscribe({
       next: (data: any) => {
-        console.log('User data fetched for device management:', data.user.firstName+" " +data.user.lastName);
+        
         this.devicesForManagement=data.user.deviceInfo || []
         this.deviceName=this.devicesForManagement.map((names)=>names.name)
-
-
-        console.log('Devices data fetched for device management:', this.devicesForManagement );
-        console.log('Device names data fetched for device management:', this.deviceName );
 
       },
       error: (error: any) => {
         console.error('Error fetching user data:', error);
       },
       complete: () => {
+        this.loading=false;
         console.log('Completed fetching existing devices');
       }
     });
@@ -52,8 +56,7 @@ getAllDevicesForMap(){
       this.mainService.getAllDevices().subscribe({
         next: (data: any) => { 
           this.devices = data.Devices;    
-          const devicesWithLocation = this.devices
-          .filter((device: any) => 
+          const devicesWithLocation = this.devices.filter((device: any) => 
             device.location && 
             Array.isArray(device.location) && 
             device.location.length > 0 
@@ -73,7 +76,10 @@ getAllDevicesForMap(){
             };
           });
           this.deviceWithLocations.emit(devicesWithLocation);
-          console.log("Devices with locations for mapping: ", devicesWithLocation);
+
+          //REturn the closest devices and the distance from the first device by mapping
+          this.closestDevices = devicesWithLocation;
+         
         },        
         error: (error: any) => {
           console.error('Error fetching Devices data for map:', error);

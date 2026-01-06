@@ -1,6 +1,12 @@
 <app-back-button></app-back-button>
 
-<div class="card">
+
+<div class="loading-container">
+
+  <app-spining-loader *ngIf="loading"></app-spining-loader>
+</div>
+
+<div class="card" *ngIf="!loading">
     <h1 id="title">My current Devices</h1>
   
     <p class="device" *ngFor="let device of deviceName"> 

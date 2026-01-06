@@ -44,7 +44,6 @@ showTrackSection = false;
   onGetDashInformation(_id: string): void {
     this.mainService.getUserById(_id).subscribe(
       (response: any) => {
-        console.log("User found AFTER SIGN IN",response);
         this.user = response.user;
         if (response.LatestLocation && response.LatestLocation.length > 0) {
           const latest = response.LatestLocation[0];
@@ -52,8 +51,6 @@ showTrackSection = false;
         } else {
           this.latestLocation = 'No location available';
         }
-  
-        console.log('Latest Location:', this.latestLocation);
       },
 
       (error: any) => {
@@ -100,7 +97,6 @@ movePrev(event: KeyboardEvent) {
   this.mainService.getUserDataByPin(this.pin).subscribe({
 
     next: (user:any)=>{
-      console.log('User found by PIN:', user);
 
       if (!user.User || !user.User) {
         console.warn('No user found for this PIN');
@@ -110,19 +106,16 @@ movePrev(event: KeyboardEvent) {
         (alreadyAddedUser: any) => alreadyAddedUser.User._id === user.User._id
       );
       if (existingUser) {
-        console.log(`User ${user.User.userName} already tracked:, `);
         return;
         
       } else {
         this.trackingDevices.push(user);
         const userLatestLocation = user.LatestLocation || null;
-        console.log('User Latest Location:', userLatestLocation);
-        console.log('Tracking Devices:', this.trackingDevices);
         localStorage.setItem('trackingDevices', JSON.stringify(this.trackingDevices));
       }
           },
    error: (error:any)=>{
-    console.log("Error fetching user", error)
+    console.log(error)
 
   
   },

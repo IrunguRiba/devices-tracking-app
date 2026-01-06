@@ -20,7 +20,6 @@ token=''
   }
 
   logInUser(user: User): Observable<User> {
-    console.log("Logging in user...");
     const payload = {
       email: user.email,
       password: user.password,
@@ -34,7 +33,6 @@ token=''
   }
 
   signInUser(user: User): Observable<User> {
-    console.log("Logging in user...");
     const payload = {
       email: user.email,
       password: user.password,

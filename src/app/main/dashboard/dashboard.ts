@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MainService } from './../main-service';
 import { LocationService } from './../../map/location-service';
+import {SpiningLoader} from '../../shared/spining-loader/spining-loader'
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [CommonModule, SpiningLoader],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
 export class Dashboard implements OnInit {
+  loading=false;
   uploadPic = '/camera.png';
   name: any[] = [];
   model: any[] = [];
@@ -46,15 +48,17 @@ export class Dashboard implements OnInit {
   }
 
   getAllDevices() {
+    this.loading=true
     const userId = localStorage.getItem('userId');
     if (!userId) {
       console.error('User ID not found in localStorage');
+      this.loading=false
       return;
     }
 
     this.mainService.getUserById(userId).subscribe({
       next: (data: any) => {
-        console.log('API RESPONSE:', data);
+        
 
         if (!data.user || !data.user.deviceInfo) {
           console.error('Invalid response: deviceInfo missing');
@@ -71,7 +75,13 @@ export class Dashboard implements OnInit {
           };
         });
       },
-      error: (err: any) => console.error('Error fetching devices:', err),
+      error: (err: any) => {
+        console.error('Error fetching devices:', err)
+      
+    },
+    complete: ()=>{
+this.loading=false
+    }
     });
   }
 }

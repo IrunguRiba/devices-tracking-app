@@ -35,7 +35,7 @@ latestLocation: Location | null= null;
   onGetDashInformation(_id: string):void{
   this.mainService.getUserById(_id).subscribe(
      (response:any)=>{
-      console.log("User found for profile...", response)
+     
       this.user = response.user;
       this.latestLocation = response.LatestLocation[0] || null;
     },

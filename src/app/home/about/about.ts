@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LocationService } from '../../map/location-service';
+import { BackButton } from '../../shared/back-button/back-button';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, BackButton],
   templateUrl: './about.html',
   styleUrls: ['./about.css']
 })

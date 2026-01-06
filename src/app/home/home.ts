@@ -14,7 +14,6 @@ export class Home {
 
   goToAbout() {
     this.router.navigate(['/about']);
-    console.log('Home button clicked');
   }
 
 }

@@ -11,12 +11,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth-service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { LoadingSpinner} from '../loading-spinner/loading-spinner'
+import { LoadingSpinner} from '../loading-spinner/loading-spinner';
+import { BackButton } from '../shared/back-button/back-button';
 
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule, HttpClientModule, CommonModule, LoadingSpinner],
+  imports: [ReactiveFormsModule, HttpClientModule, CommonModule, LoadingSpinner, BackButton],
 templateUrl: './auth.html',
   styleUrl: './auth.css',
 })
@@ -47,8 +48,7 @@ export class Auth {
       const userData = this.signUpForm.value;
 
       this.authService.registerUser(userData).subscribe({
-        next: (response: any) => {
-          console.log(' New user created:', response);
+        next: (response: any) => { 
           this.isLoginMode = true;
           this.loginForm.patchValue({
             email: userData.email,
@@ -78,7 +78,6 @@ export class Auth {
         },
         complete: () => {
           this.loading=false;
-          console.log('User created success.');
         },
       });
     } else {
@@ -93,14 +92,11 @@ export class Auth {
       this.loading=true;
       this.authService.logInUser(user).subscribe({
         next: (response: any) => {
-          console.log('log in sucess', response);
 
           if (response && response.user && response.user._id) {
-            localStorage.setItem('token', response.token)
-            console.log('token', response.token)
+            localStorage.setItem('token', response.token);
             localStorage.setItem('userId', response.user._id);
             localStorage.setItem('user', JSON.stringify(response.user));
-      console.log('User stored successfully:', response);
           }
           this.loading=true;
           this.router.navigate(['/main']);
@@ -109,7 +105,6 @@ export class Auth {
           console.log(error);
         },
         complete: () => {
-          console.log('Completed log in');
           this.loading=false;
         },
       });

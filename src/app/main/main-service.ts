@@ -14,7 +14,6 @@ export class MainService {
 
   
   addNewDevice(device: NewDevice, userId: string): Observable<NewDevice> {
-    console.log("Adding new device:", device);
     const token= localStorage.getItem('token')
     const headers = {
       Authorization: `Bearer ${token}`
@@ -22,7 +21,7 @@ export class MainService {
     const addDeviceUrl = `https://tracking-app-backend-g3al.onrender.com/api/devices/registerMyDevice/${userId}`;
     
     if (!token) {
-      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+      window.location.href = "https://multi-device-tracking-app-frontend.vercel.app/about";
    return EMPTY;
     }
     return this.http.post<NewDevice>(addDeviceUrl, device, {headers});
@@ -39,7 +38,7 @@ export class MainService {
     const getUserByIdUrl = `${this.globalUrl}/${_id}`;
 
     if (!token) {
-      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+      window.location.href = "https://multi-device-tracking-app-frontend.vercel.app/about";
    return EMPTY;
     }
     return this.http.get<User>(getUserByIdUrl, {headers});
@@ -52,7 +51,7 @@ export class MainService {
     };
     const getUserByPinUrl = `https://tracking-app-backend-g3al.onrender.com/api/getUserByPin/${pin}`;
     if (!token) {
-      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+      window.location.href = "https://multi-device-tracking-app-frontend.vercel.app/about";
    return EMPTY;
     }
     return this.http.get<User>(getUserByPinUrl, {headers});
@@ -65,7 +64,7 @@ export class MainService {
     };
     const editDeviceUrl = `https://tracking-app-backend-g3al.onrender.com/api/devices/editDevice/${deviceId}`;
     if (!token) {
-      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+      window.location.href = "https://multi-device-tracking-app-frontend.vercel.app/about";
    return EMPTY;
     }
     return this.http.put<NewDevice>(editDeviceUrl, updatedDevice, {headers});
@@ -83,7 +82,7 @@ getAllDevices(): Observable<DeviceInfo[]> {
     };
     const getAllDevicesUrl = `https://tracking-app-backend-g3al.onrender.com/api/devices/getAllDevices`;
     if (!token) {
-      window.location.href = "https://device-tracking-app-frontend-xi.vercel.app/about";
+      window.location.href = "https://multi-device-tracking-app-frontend.vercel.app/about";
    return EMPTY;
     }
     return this.http.get<DeviceInfo[]>(getAllDevicesUrl, {headers});

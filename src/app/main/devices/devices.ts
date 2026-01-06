@@ -67,13 +67,13 @@ export class Devices implements OnInit {
 
     this.mainService.getUserById(userId).subscribe({
       next: (data: any) => {
-        console.log('User data fetched for device check:', data);
+       
         const visitorIdVerification = localStorage.getItem('visitorId');
-        console.log("New visitor ID from localStorage:", visitorIdVerification);
+        
   
         const deviceHasMatchingVisitorId = data.user.deviceInfo?.some((device: DeviceInfo) => device.visitorId === visitorIdVerification);
         
-        console.log("Matching visitorId found:", deviceHasMatchingVisitorId);
+       
         if ( (data.user?.deviceInfo?.length >0) && deviceHasMatchingVisitorId  ) {
           this.hideButton = true;
         } else {

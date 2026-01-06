@@ -41,8 +41,6 @@ export class LocationService {
         window.alert("Please disable your ad blocker to continue.");
         return; 
       }
-
-      console.log('Visitor ID saved:', this.visitorId);
       localStorage.setItem('visitorId', this.visitorId);
 
     } catch (error) {
@@ -50,7 +48,6 @@ export class LocationService {
     }
   }
   getLocation(device: DeviceInfo): Observable<DeviceInfo> {
-    console.log("Getting Location from Service");
     const token = localStorage.getItem('token');
     return this.http.get<DeviceInfo>(
       `https://tracking-app-3.onrender.com/api/devices/getMyDeviceInfo/${device._id}`,
@@ -62,7 +59,7 @@ export class LocationService {
     
     this.mainService.getUserById(userId).subscribe({
       next: (user: any) => {
-        console.log("User found for location", user);
+      
 
         const devices = user.user.deviceInfo || [];
         if (devices.length === 0) {
@@ -82,7 +79,7 @@ export class LocationService {
               const latitude = position.coords.latitude;
               const longitude = position.coords.longitude;
               this.map.set(`Latitude: ${latitude}, Longitude: ${longitude}`);
-              console.log(this.map());
+            
 
               if (this.socket) {
                 this.socket.emit('coordinates', { 
@@ -92,7 +89,7 @@ export class LocationService {
                   deviceId, 
                   visitorId: this.visitorId || localStorage.getItem('visitorId') 
                 });
-                console.log(`Emitted coordinates: Latitude: ${latitude}, Longitude: ${longitude}, UserId: ${userId}, DeviceId: ${deviceId}, visitorId: ${this.visitorId}`);
+                console.log("Location is Live 🟩");
               }
             },
             (error) => console.error('Error watching location changes:', error),
