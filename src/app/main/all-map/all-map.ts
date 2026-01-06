@@ -5,17 +5,47 @@ import { MainService } from '../main-service';
 import { Location } from '../interfaces/location';
 import { ManageDevices } from '../devices/manage-devices/manage-devices';
 import 'leaflet/dist/leaflet.css';
+import  {CloseDevices} from './close-devices/close-devices';
+import { SearchingLoader } from '../../shared/searching-loader/searching-loader';
 
 
 @Component({
   selector: 'app-all-map',
-  imports: [CommonModule, ManageDevices],
+  imports: [CommonModule, ManageDevices,  CloseDevices, SearchingLoader],
   templateUrl: './all-map.html',
   styleUrls: ['./all-map.css'] 
 })
 export class AllMap implements AfterViewInit {
+  loading=true
   printIcon='/printer.png'
-  showCloseDeviceInfo=false;
+  showCloseDeviceInfo= false;
+  closestDevice: any = null;
+  minDistance: number = 0;
+  closestDeviceLocation: any = null;
+  lat: number = 0;
+  long: number = 0;
+ 
+
+  handleClosestDevice(event: any) {
+    this.loading = true; 
+  
+
+    setTimeout(() => {
+      const payload = event as { closestDevice: any; distance: number };
+      
+     
+      this.closestDevice = payload.closestDevice;
+      this.closestDeviceLocation = payload.closestDevice.location[payload.closestDevice.location.length -1];
+      this.lat = this.closestDeviceLocation.latitude;
+      this.long = this.closestDeviceLocation.longitude;
+      this.minDistance = payload.distance;
+      this.showCloseDeviceInfo = true;
+  
+      this.loading = false; 
+    });
+  }
+  
+  
 
   toggleCloseDeviceInfo() {
     this.showCloseDeviceInfo = !this.showCloseDeviceInfo;

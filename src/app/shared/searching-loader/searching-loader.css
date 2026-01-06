@@ -1,0 +1,35 @@
+.loader {
+  margin-top: 30%;
+  margin-left: 54%; 
+  width: 3px;             
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 0 0 #0004;
+  animation: l2 1.5s infinite linear;
+  position: relative;
+  transform: translate(-50%, -50%); 
+  margin: 30% auto 0;  
+}
+
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 #0004;
+  animation: inherit;
+  animation-delay: -0.5s;
+  border-radius: 50%;
+}
+
+.loader:after {
+  animation-delay: -1s;
+}
+
+@keyframes l2 {
+  100% {
+    box-shadow: 0 0 0 80px #0000; /* bigger spread */
+  }
+}

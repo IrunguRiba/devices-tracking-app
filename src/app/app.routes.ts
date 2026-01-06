@@ -11,7 +11,8 @@ import {About} from './home/about/about'
 import {SignIn} from './auth/sign-in/sign-in';
 import {ManageDevices} from './main/devices/manage-devices/manage-devices';
 import {AllMap} from '../app/main/all-map/all-map'
-import {CloseDevices} from '../app/main/all-map/close-devices/close-devices'
+import {CloseDevices} from '../app/main/all-map/close-devices/close-devices';
+import { SearchingLoader} from '../app/shared/searching-loader/searching-loader'
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -28,7 +29,8 @@ export const routes: Routes = [
     { path: 'devices', component: Devices },
     { path: 'add', component: Add },
     { path: 'notifications', component: Notifications },
-    {path: 'close-devices', component: CloseDevices}
+    {path: 'close-devices', component: CloseDevices},
+    {path: 'loader', component: SearchingLoader}
     
   ]  
 }

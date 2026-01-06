@@ -1,3 +1,5 @@
+
+
 <div id="map"></div>
 
 <hr>
@@ -24,21 +26,26 @@
 
   <app-manage-devices (deviceWithLocations)="updateDeviceLocations($event)"></app-manage-devices>
 
+  <app-close-devices (closeDevicesEvent)="handleClosestDevice($event)"></app-close-devices>
 
   <div class="closeDevice popup-container" *ngIf="showCloseDeviceInfo">
-    <div class="popup-main">
+    
+    <app-searching-loader *ngIf="loading"></app-searching-loader>
+
+    <div class="popup-main" *ngIf="!loading">
       <div class="popup-content">
         <div class="popup-icon">
           <img [src]="printIcon" alt="Device icon" class="device-icon">
         </div>
         <div class="popup-info">
-          <h3 class="device-name">Samsung s12</h3>
-          <p class="device-detail">Distance: 23 meters</p>
-          <p class="device-detail">Status: <span class="status-active">Active</span></p>
+          <h3 class="device-name">{{ closestDevice?.name }}</h3>
+          <p>{{lat}}, {{long}}</p>
+          <p>Approx.: {{ minDistance.toFixed(2) }} meters</p>
+          <p class="status-active">Status: {{ closestDevice.status }}</p>
         </div>
       </div>
     </div>
-    <div class="button-container">
+    <div class="button-container" *ngIf="!loading">
       <button class="learn-more">
         <span class="circle" aria-hidden="true">
           <span class="icon arrow"></span>
@@ -47,5 +54,4 @@
       </button>
     </div>
   </div>
-
   

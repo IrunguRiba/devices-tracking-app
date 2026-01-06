@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MainService } from '../../main-service';
 
 @Component({
@@ -13,6 +13,8 @@ export class CloseDevices implements OnInit {
 
   allDeviceLocations: any[] = [];
   myDeviceLocations: any[] = [];
+  @Output() closeDevicesEvent = new EventEmitter<{ closestDevice: any; distance: number }>();
+
 
   private calculated = false; 
 
@@ -33,8 +35,6 @@ export class CloseDevices implements OnInit {
         this.myDeviceLocations = this.myDevices.filter(
           data => Array.isArray(data.location) && data.location.length > 0
         );
-
-        console.log('MY DEVICES WITH LOCATION:', this.myDeviceLocations);
         this.tryCalculateClosest();
       },
       error: (err:any) => console.error('User devices error:', err)
@@ -48,8 +48,6 @@ export class CloseDevices implements OnInit {
         this.allDeviceLocations = this.devices.filter(
           data => Array.isArray(data.location) && data.location.length > 0
         );
-
-        console.log('ALL DEVICES WITH LOCATION:', this.allDeviceLocations);
         this.tryCalculateClosest();
       },
       error: (err:any) => console.error('All devices error:', err)
@@ -96,7 +94,8 @@ export class CloseDevices implements OnInit {
 
       if (closestDevice) {
         console.log(
-          `Closest device to ${myDevice.name} → ${closestDevice.name} (${minDistance.toFixed(2)} meters)`
+          this.closeDevicesEvent.emit({closestDevice, distance: minDistance}),
+
         );
       } else {
         console.log(`No nearby device found for ${myDevice.name}`);
