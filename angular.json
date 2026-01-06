@@ -19,17 +19,9 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*.png",
-                "input": "node_modules/leaflet/dist/images",
-                  "output": "assets/leaflet/"
-              },
               {
                 "glob": "**/*",
-                "input": "node_modules/leaflet/dist/images",
-                "output": "tracking-app/public/leaflet/images"
+                "input": "public"
               }
             ],
             "styles": [
