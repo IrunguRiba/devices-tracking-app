@@ -8,17 +8,44 @@
          [class.no-location]="device.locations.length === 0"
          (click)="goToLocation(device)">
       <h3>{{ device.name }}</h3>
-      <p><strong>Closest:</strong> {{ device.firstSeen ? (device.firstSeen | date:'short') : 'No data' }}</p>
-      <p><strong>Status:</strong> {{ device.status }}</p>
-      <p><strong>Last Updated:</strong> {{ device.lastUpdated ? (device.lastUpdated | date:'short') : 'No data' }}</p>
-      <p *ngIf="device.locations.length === 0" style="color:red;">Location unavailable</p>
+      <h3>Closest Device Info</h3>
+      
+  
+<div class="container" (click)="toggleCloseDeviceInfo()">
+  <div class="loader"><span></span></div>
+  <div class="loader"><span></span></div>
+  <div class="loader"><i></i></div>
+  <div class="loader"><i></i></div>
+</div>
+
+
     </div>
   </div>
 
   <app-manage-devices (deviceWithLocations)="updateDeviceLocations($event)"></app-manage-devices>
 
 
-  
-
+  <div class="closeDevice popup-container" *ngIf="showCloseDeviceInfo">
+    <div class="popup-main">
+      <div class="popup-content">
+        <div class="popup-icon">
+          <img [src]="printIcon" alt="Device icon" class="device-icon">
+        </div>
+        <div class="popup-info">
+          <h3 class="device-name">Samsung s12</h3>
+          <p class="device-detail">Distance: 23 meters</p>
+          <p class="device-detail">Status: <span class="status-active">Active</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="button-container">
+      <button class="learn-more">
+        <span class="circle" aria-hidden="true">
+          <span class="icon arrow"></span>
+        </span>
+        <span class="button-text">Contact Owner</span>
+      </button>
+    </div>
+  </div>
 
   

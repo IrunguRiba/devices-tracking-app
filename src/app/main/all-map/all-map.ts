@@ -14,6 +14,18 @@ import 'leaflet/dist/leaflet.css';
   styleUrls: ['./all-map.css'] 
 })
 export class AllMap implements AfterViewInit {
+  printIcon='/printer.png'
+  showCloseDeviceInfo=false;
+
+  toggleCloseDeviceInfo() {
+    this.showCloseDeviceInfo = !this.showCloseDeviceInfo;
+    if (this.showCloseDeviceInfo) {
+      console.log("DEVICE INFO OPENED");
+    } else {
+      console.log("DEVICE INFO CLOSED");
+    }
+  }
+  
   deviceLocations: any[] = [];
   surroundingDevices: any[] = []; 
 
@@ -109,7 +121,7 @@ export class AllMap implements AfterViewInit {
   private addTileLayers() {
     const mapTilerLayer = Leaflet.tileLayer(
       'https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=j5Ji1JRhCQUrFSHI1dq4',
-      { attribution: '© MapTiler © OSM', tileSize: 512, zoomOffset: -1, maxZoom: 24 }
+      { attribution: '© MapTiler © OSM', tileSize: 512, zoomOffset: -1, maxZoom: 22 }
     );
     const osmLayer = Leaflet.tileLayer(
       'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
