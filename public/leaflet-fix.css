@@ -1,0 +1,10 @@
+/* Fix Leaflet image paths */
+.leaflet-default-icon-path {
+    background-image: url(/leaflet-images/marker-icon.png);  /* NOT marker-ikon.png */
+  }
+  .leaflet-default-shadow-path {
+    background-image: url(/leaflet-images/marker-shadow.png);
+  }
+  .leaflet-retina .leaflet-default-icon-path {
+    background-image: url(/leaflet-images/marker-icon-2x.png);
+  }
