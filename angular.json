@@ -24,11 +24,12 @@
               {
                 "glob": "**/*",
                 "input": "node_modules/leaflet/dist/images",
-                "output": "/leaflet-images/"
-              }
+                "output": "assets/leaflet/images"
+              }              
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "/leaflet/leaflet.css"
             ],
             "scripts": ["node_modules/leaflet/dist/leaflet.js"],
             "stylePreprocessorOptions": {
@@ -90,7 +91,10 @@
                 "output": "/leaflet-images/"
               }
             ],
-            "styles": ["src/styles.css"]
+            "styles": [
+              "src/styles.css",
+              "src/assets/leaflet/leaflet.css"
+          ]
           }
         }
       }
