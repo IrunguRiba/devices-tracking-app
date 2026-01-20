@@ -6,6 +6,7 @@ import { Devices } from '../devices/devices';
 import { Location } from '../interfaces/location';
 import { LocationService } from './../../map/location-service';
 import { Router } from '@angular/router';
+import {Socket, io} from 'socket.io-client';
 
 
 
@@ -16,7 +17,13 @@ import { Router } from '@angular/router';
   styleUrl: './notifications.css'
 })
 export class Notifications implements OnInit{
-  
+
+  showNotification=false;
+  notificationTimer: any;
+  socket!: Socket;
+
+  latestNotification: any=[];
+
   latestLocation:any | null=null;
 userLatestLocation:Location | null=null;
   locationPic='/location.png';
@@ -34,12 +41,16 @@ showTrackSection = false;
  
 
   ngOnInit(): void {
+    this.receivedNotification()
     const userId = localStorage.getItem('userId')!; // ! used since The user id MUST be there after signin and that it will be passed
 
     this.onGetDashInformation(userId);
 
     this.locationService.watchLocationOnInit(userId)
+  
   }
+
+
   
   onGetDashInformation(_id: string): void {
     this.mainService.getUserById(_id).subscribe(
@@ -135,4 +146,19 @@ goToDevices(){
   this.router.navigate(['/main/devices']);
 }
 
+
+receivedNotification() {
+  this.socket = io('http://localhost:4000');
+
+  this.socket.on('receivedNotification', (data: any) => {
+    this.latestNotification.push(data);
+    this.showNotification = true;
+
+    clearTimeout(this.notificationTimer);
+
+    this.notificationTimer = setTimeout(() => {
+      this.showNotification = false;
+    }, 10000);
+  });
+}
 }

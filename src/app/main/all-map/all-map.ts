@@ -1,4 +1,4 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Leaflet from 'leaflet';
 import { MainService } from '../main-service';
@@ -7,15 +7,22 @@ import { ManageDevices } from '../devices/manage-devices/manage-devices';
 import 'leaflet/dist/leaflet.css';
 import  {CloseDevices} from './close-devices/close-devices';
 import { SearchingLoader } from '../../shared/searching-loader/searching-loader';
+import { DeviceInfoForChild } from '../interfaces/deviceInterfaceForNotification';
+import { Socket, io } from 'socket.io-client';
 
 
 @Component({
   selector: 'app-all-map',
   imports: [CommonModule, ManageDevices,  CloseDevices, SearchingLoader],
-  templateUrl: './all-map.html',
+templateUrl: './all-map.html',
   styleUrls: ['./all-map.css'] 
 })
 export class AllMap implements AfterViewInit {
+
+ socket!: Socket;
+
+ 
+
   loading=true
   printIcon='/printer.png'
   showCloseDeviceInfo= false;
@@ -24,7 +31,13 @@ export class AllMap implements AfterViewInit {
   closestDeviceLocation: any = null;
   lat: number = 0;
   long: number = 0;
- 
+
+
+  request: DeviceInfoForChild = {}
+  
+
+
+
 
   handleClosestDevice(event: any) {
     this.loading = true; 
@@ -119,9 +132,12 @@ export class AllMap implements AfterViewInit {
         this.devices = data.user.deviceInfo.map((device: any) => {
           const locations = Array.isArray(device.location) ? device.location : [];
           return {
+            description: device.description || 'No Description',
             name: device.model || device.name || 'Unknown Device',
+            model: device.model || 'Unknown Model',
             status: device.status || 'Unknown',
-            locations
+          locations
+          
           };
         });
 
@@ -198,10 +214,24 @@ export class AllMap implements AfterViewInit {
 
   goToLocation(device: any) {
     this.drawDeviceOnMap(device);
+    console.log(` Device ${device.name} with Features: ${device.model}, ${device.description}  Last seen at Lat: ${this.latestLocation.latitude}, Lng: ${this.latestLocation.longitude} Request for help to find it` );
+
+
+    this.socket = io('http://localhost:4000');
+   
+    this.request={
+      name: device.name,
+      model: device.model,
+      description: device.description,
+      latitude: this.latestLocation.latitude,
+      longitude: this.latestLocation.longitude
+
+    };
+    this.socket.emit('send-request',  {request: this.request} );
+    console.log(this.request);
+    console.log("Help request sent to server via socket.io");
   }
 
-  getClosestDevices() {
 
-  }
 
 }

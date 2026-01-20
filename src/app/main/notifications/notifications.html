@@ -1,4 +1,28 @@
 
+  
+<div class="notification-container" *ngIf="showNotification">
+  <div class="notification-card">
+    <div class="notification-icon"><div class="loader"></div></div>
+
+    <div class="notification-content">
+      <h4>Location Access Notice</h4>
+      <p>
+        Sharing a PIN allows others to view your <strong>real-time location</strong>.
+        Only share it with people you trust.
+      </p>
+
+      <button class="learn-more">
+        <span class="circle" aria-hidden="true">
+        <span class="icon arrow"></span>
+        </span>
+        <span class="button-text">I Understand</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
 <div *ngIf="!showTrackSection" class="dashboard-container">
 
     <div class="stat-card stat-active">
@@ -69,5 +93,6 @@
         </ng-template>
       </div>
     </div>
+
+   
   </div>
-  
