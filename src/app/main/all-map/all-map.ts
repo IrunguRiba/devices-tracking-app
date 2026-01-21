@@ -4,7 +4,6 @@ import * as Leaflet from 'leaflet';
 import { MainService } from '../main-service';
 import { Location } from '../interfaces/location';
 import { ManageDevices } from '../devices/manage-devices/manage-devices';
-import 'leaflet/dist/leaflet.css';
 import  {CloseDevices} from './close-devices/close-devices';
 import { SearchingLoader } from '../../shared/searching-loader/searching-loader';
 import { DeviceInfoForChild } from '../interfaces/deviceInterfaceForNotification';
