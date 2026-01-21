@@ -216,7 +216,7 @@ export class AllMap implements AfterViewInit {
     console.log(` Device ${device.name} with Features: ${device.model}, ${device.description}  Last seen at Lat: ${this.latestLocation.latitude}, Lng: ${this.latestLocation.longitude} Request for help to find it` );
 
 
-    this.socket = io('http://localhost:4000');
+    this.socket = io('https://tracking-app-backend-g3al.onrender.com');
    
     this.request={
       name: device.name,
