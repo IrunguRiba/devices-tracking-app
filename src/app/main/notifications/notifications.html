@@ -1,20 +1,18 @@
 
-  
 <div class="notification-container" *ngIf="showNotification">
   <div class="notification-card">
-    <div class="notification-icon"><div class="loader"></div></div>
+    <div class="loader"></div>
 
     <div class="notification-content">
       <h4>Location Access Notice</h4>
       <p>
-        Sharing a PIN allows others to view your <strong>real-time location</strong>.
+        Sharing a PIN allows others to view your
+        <strong>real-time location</strong>.
         Only share it with people you trust.
       </p>
 
       <button class="learn-more">
-        <span class="circle" aria-hidden="true">
-        <span class="icon arrow"></span>
-        </span>
+        <span class="circle"></span>
         <span class="button-text">I Understand</span>
       </button>
     </div>
@@ -22,77 +20,80 @@
 </div>
 
 
-
 <div *ngIf="!showTrackSection" class="dashboard-container">
 
-    <div class="stat-card stat-active">
-      <div class="stat-content">
-        <span class="stat-title">
-          <strong>I-TRACK</strong> lets you track multiple devices in real-time.<br>
-          Monitor devices reliably and accurately.<br>
-          <em>Active Devices</em>
-        </span>
-      </div>
-      <a (click)="goToDevices()">
-        <img [src]="sharePic" alt="Active Devices" class="stat-icon">
-      </a>
-      <span class="stat-value">{{ numberOfDevices }}</span>
+  <div class="stat-card">
+    <div class="stat-content">
+      <span class="stat-title">
+        <strong>I-TRACK</strong> lets you track devices in real-time.<br>
+        <em>Active Devices</em>
+      </span>
     </div>
-  
+
+    <a (click)="goToDevices()">
+      <img [src]="sharePic" class="stat-icon">
+    </a>
+
+    <span class="stat-value">{{ numberOfDevices }}</span>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-content">
+      <span class="stat-title">
+        <strong>NEW!</strong> Track another device using a PIN.<br>
+        <em>Advanced Features</em>
+      </span>
+    </div>
+
+    <a (click)="openAdvancedTracking()">
+      <img [src]="sharePic" class="stat-icon">
+    </a>
+  </div>
+
+</div>
+
+
+<div *ngIf="showTrackSection" class="track-section">
+  <h2 id="title">Track By PIN</h2>
+
+  <div class="otp-input-container">
+    <ng-otp-input
+    [config]="otpConfig"
+    (onInputChange)="onOtpChange($event)" class="otp-input">
     
-  
-    <div class="stat-card stat-advanced">
-      <div class="stat-content">
-        <span class="stat-title">
-          <strong>NEW!</strong> Track another device using a PIN.<br>
-          The device does not have to be your own.<br>
-          <em>Advanced Features</em>
-        </span>
-      </div>
-      <a (click)="openAdvancedTracking()">
-        <img [src]="sharePic" alt="Advanced Features" class="stat-icon">
-      </a>
-    </div>
-  
-  </div>
-  
-  <div *ngIf="showTrackSection" class="track-section">
+  </ng-otp-input>
 
-   
-    <h2 id="title">Track By Pin</h2>
+  <button class="validate" (click)="onEnterPin()">
+    Validate
+  </button>
+  </div>
+
+
+  <div class="trackingDevicesContainer" *ngIf="trackingDevices.length > 0">
+    <h2 class="liveDevices">Live Location</h2>
   
-    <div class="pin-input-container">
-      <div class="pin-boxes">
-        <input
-          maxlength='1'
-          type="text"
-          class="pin-box"
-          *ngFor="let box of pinBoxes; let i = index"
-          [value]="pinBoxes[i]"
-          (input)="updatePin($event, i)"
-          (keydown)="movePrev($event)"
-          (keyup)="moveNext($event, i)"
-          
-        />
-      </div>
-      <button id="enterBtn" (click)="onEnterPin()">Enter</button>
-    </div>
-  
-    <div class="trackingDevicesContainer" *ngIf="trackingDevices.length > 0">
-      <h2 class="liveDevices">Live Location</h2>
-      <div *ngFor="let t of trackingDevices" class="tracked-user">
-        <ng-container *ngIf="t.LatestLocation?.length; else noLocation">
-          <p>
-            {{ t.User.userName }} — Location: {{ t.LatestLocation[0].location }}
+    <div class="tracked-user">
+      <ng-container *ngIf="userLatestLocation; else noLocation">
+        <div class="user-header">
+          <span class="username">{{ trackingDevices[0].User.userName }}</span>
+        </div>
+        <div class="location-row">
+          <div class="location-icon-container">
             <img [src]="locationPic" class="locationPic" alt="Live">
-          </p>
-          <hr class="location-divider">
-        </ng-container>
-        <ng-template #noLocation>
-          <p class="no-location">{{ t.User.userName }} has no location available</p>
-        </ng-template>
-      </div>
+            <span class="location-text">
+              Lat: {{ userLatestLocation.latitude }}, Lon: {{ userLatestLocation.longitude }}
+            </span>
+          </div>
+        </div>
+        
+      </ng-container>
+  
+      <ng-template #noLocation >
+        <p class="no-location">
+          {{ trackingDevices[0].User.userName }} has no location available
+        </p>
+      </ng-template>
     </div>
-
-   
   </div>
+  
+  
