@@ -104,7 +104,7 @@ goToDevices(){
 
 
 receivedNotification() {
-  this.socket = io('https://tracking-app-backend-g3al.onrender.com/');
+  this.socket = io('http://localhost:4000');
 
   this.socket.on('receivedNotification', (data: any) => {
     this.latestNotification.push(data);
