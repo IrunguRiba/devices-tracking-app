@@ -93,7 +93,7 @@ export class LocationService {
               }
             },
             (error) => console.error('Error watching location changes:', error),
-            { enableHighAccuracy: true, maximumAge: 0, timeout: 20000 }
+            { enableHighAccuracy: true, maximumAge: 0, timeout: 50000 }
           );
         });
       },

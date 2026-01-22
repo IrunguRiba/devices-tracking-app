@@ -9,7 +9,6 @@ import { SearchingLoader } from '../../shared/searching-loader/searching-loader'
 import { DeviceInfoForChild } from '../interfaces/deviceInterfaceForNotification';
 import { Socket, io } from 'socket.io-client';
 
-
 @Component({
   selector: 'app-all-map',
   imports: [CommonModule, ManageDevices,  CloseDevices, SearchingLoader],
