@@ -4,6 +4,7 @@ import * as Leaflet from 'leaflet';
 import { MainService } from './../main/main-service';
 import { Location } from '../main/interfaces/location';
 
+
 @Component({
   selector: 'map',
   templateUrl: './map.html',
