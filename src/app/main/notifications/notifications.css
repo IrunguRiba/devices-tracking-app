@@ -55,7 +55,6 @@
   font-weight: 700;
 }
 
-
 .notification-container {
   position: fixed;
   top: 20%;
@@ -66,39 +65,31 @@
 }
 
 .notification-card {
-  width: 360px;
-  padding: 24px;
-  border-radius: 12px;
-  background: #2621c2;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+  width: 90%;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #2d23e0, #1a13b8);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
   text-align: center;
   animation: slideIn 0.5s ease forwards;
-}
-
-.notification-content h4 {
   color: #e2e2e2;
-  margin-bottom: 8px;
-}
-
-.notification-content p {
-  color: #bdbdbd;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
 }
 
 .loader {
   display: inline-flex;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .loader::before,
 .loader::after {
   content: "";
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: #fff;
+  background: #ffdd57;
   animation: bounce 1s infinite alternate;
 }
 
@@ -106,45 +97,145 @@
   animation-delay: .4s;
 }
 
+.notification-content h4 {
+  color: #fff;
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.device-info .device-details {
+  margin-bottom: 12px;
+}
+
+.device-info .device-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 4px;
+}
+
+.device-info .device-features {
+  font-size: 0.9rem;
+  color: #cfcfcf;
+}
+
+.device-location {
+  font-size: 0.85rem;
+  color: #b0b0b0;
+  margin: 12px 0;
+  line-height: 1.3;
+}
+
+.request-help {
+  font-weight: 600;
+  color: #ffd700;
+  margin-bottom: 16px;
+}
+
+
+.learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background: #ffd700;
+  color: #967009;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.learn-more:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(255, 215, 0, 0.5);
+}
+
+.learn-more .circle {
+  width: 10px;
+  height: 10px;
+  background: #694e04;
+  border-radius: 50%;
+}
+
 @keyframes bounce {
   from { transform: scale(0.6); opacity: .5; }
   to { transform: scale(1); opacity: 1; }
 }
 
-button.learn-more {
-  position: relative;
-  width: 12rem;
-  height: 3rem;
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+.button {
+  line-height: 1;
+  text-decoration: none;
+  display: inline-flex;
   border: none;
-  background: transparent;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  gap: 0.75rem;
+  background-color: var(--clr);
+  color: #fff;
+  border-radius: 1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  padding-left: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.3s;
+ font-size: 1rem;
+ letter-spacing: .2rem;
 }
 
-button.learn-more .circle {
-  width: 3rem;
-  height: 3rem;
-  background: #131ebb;
-  border-radius: 1.5rem;
-  transition: width .45s;
+.button__icon-wrapper {
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  color: var(--clr);
+  background-color: #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
 }
 
-button.learn-more .button-text {
+.button:hover {
+  background-color: #000;
+}
+
+.button:hover .button__icon-wrapper {
+  color: #000;
+}
+
+.button__icon-svg--copy {
   position: absolute;
-  left: 3.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-weight: 700;
-  color: #acaecc;
-  text-transform: uppercase;
+  transform: translate(-150%, 150%);
 }
 
-button.learn-more:hover .circle {
-  width: 100%;
+.button:hover .button__icon-svg:first-child {
+  transition: transform 0.3s ease-in-out;
+  transform: translate(150%, -150%);
 }
 
-button.learn-more:hover .button-text {
-  color: #c99200;
+.button:hover .button__icon-svg--copy {
+  transition: transform 0.3s ease-in-out 0.1s;
+  transform: translate(0);
 }
+
+
+
+
+
 
 .track-section {
   padding: 0px 4px;
