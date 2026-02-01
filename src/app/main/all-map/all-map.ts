@@ -31,7 +31,10 @@ export class AllMap implements AfterViewInit {
   long: number = 0;
 
 
+
   request: DeviceInfoForChild = {}
+  requestReceiverId:any;
+      senderId:any;
   
 
 
@@ -44,13 +47,22 @@ export class AllMap implements AfterViewInit {
     setTimeout(() => {
       const payload = event as { closestDevice: any; distance: number };
       
-     
+ 
       this.closestDevice = payload.closestDevice;
       this.closestDeviceLocation = payload.closestDevice.location[payload.closestDevice.location.length -1];
       this.lat = this.closestDeviceLocation.latitude;
       this.long = this.closestDeviceLocation.longitude;
       this.minDistance = payload.distance;
       this.showCloseDeviceInfo = true;
+      console.log(this.requestReceiverId)
+
+      this.requestReceiverId={
+        id:  payload.closestDevice.userId
+      }
+
+ 
+
+  
   
       this.loading = false; 
     });
@@ -225,8 +237,10 @@ export class AllMap implements AfterViewInit {
       longitude: this.latestLocation.longitude
 
     };
-    this.socket.emit('send-request',  {request: this.request} );
+    
+    this.socket.emit('send-request',  {requestSender: this.request, requestReceiver:this.requestReceiverId} );
     console.log(this.request);
+    console.log(this.requestReceiverId)
     console.log("Help request sent to server via socket.io");
   }
 
