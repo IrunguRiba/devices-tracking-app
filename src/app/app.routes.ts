@@ -13,7 +13,7 @@ import {ManageDevices} from './main/devices/manage-devices/manage-devices';
 import {AllMap} from '../app/main/all-map/all-map'
 import {CloseDevices} from '../app/main/all-map/close-devices/close-devices';
 import { SearchingLoader} from '../app/shared/searching-loader/searching-loader'
-import {Report} from './reports/report/report'
+
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -23,7 +23,6 @@ export const routes: Routes = [
   { path: 'about', component: About},
   {path: 'sign-in', component: SignIn},
   {path: 'manage-devices', component: ManageDevices},
-  {path: 'report', component: Report},
   {path: 'main', component: Main,
   children: [
     { path: '', redirectTo: 'devices', pathMatch: 'full' },

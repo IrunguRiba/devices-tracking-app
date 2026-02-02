@@ -59,10 +59,6 @@ console.log(error)
 
 }
 
-goToReports(){
-  this.router.navigate(['/report'])
-  console.log('Going to reports')
-}
 
 logout(){
 this.router.navigate(['/about'])
