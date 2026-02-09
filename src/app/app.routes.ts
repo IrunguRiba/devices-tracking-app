@@ -13,12 +13,14 @@ import {ManageDevices} from './main/devices/manage-devices/manage-devices';
 import {AllMap} from '../app/main/all-map/all-map'
 import {CloseDevices} from '../app/main/all-map/close-devices/close-devices';
 import { SearchingLoader} from '../app/shared/searching-loader/searching-loader'
+import {TrackedDeviceMap} from './main/notifications/tracked-device-map/tracked-device-map'
 
 
 export const routes: Routes = [
   { path: '', component: Home },
   { path: 'auth', component: Auth },
   { path: 'map', component: Map },
+  {path: 'tracked-device-laction', component: TrackedDeviceMap},
   { path: 'all-map', component: AllMap },
   { path: 'about', component: About},
   {path: 'sign-in', component: SignIn},

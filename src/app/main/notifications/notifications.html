@@ -111,13 +111,13 @@
     <div class="tracked-user">
       <ng-container *ngIf="userLatestLocation; else noLocation">
         <div class="user-header">
-          <span class="username">{{ trackingDevices[0].User.userName }}</span>
+          <span class="username">#{{ trackingDevices[0].User.userName }} was last seen at</span>
         </div>
         <div class="location-row">
           <div class="location-icon-container">
-            <img [src]="locationPic" class="locationPic" alt="Live">
+            <img [src]="locationPic" class="locationPic" alt="Live" (click)="showOnMap()">
             <span class="location-text">
-              Lat: {{ userLatestLocation.latitude }}, Lon: {{ userLatestLocation.longitude }}
+              Latitude: {{ userLatestLocation.latitude }} ,  Longitude: {{ userLatestLocation.longitude }}
             </span>
           </div>
         </div>
@@ -133,3 +133,5 @@
   </div>
   
   
+
+ <app-tracked-device-map [trackedUserLatestLocation]="userLatestLocation" style="display:none"></app-tracked-device-map>

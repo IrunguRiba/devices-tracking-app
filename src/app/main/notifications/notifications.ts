@@ -8,12 +8,11 @@ import { LocationService } from './../../map/location-service';
 import { Router } from '@angular/router';
 import {Socket, io} from 'socket.io-client';
 import { NgOtpInputComponent } from 'ng-otp-input';
-import { LatestLocation } from './../interfaces/latest-location';
-
+import {TrackedDeviceMap} from './tracked-device-map/tracked-device-map'
 
 @Component({
   selector: 'app-notifications',
-  imports: [CommonModule, NgOtpInputComponent],
+  imports: [CommonModule, NgOtpInputComponent, TrackedDeviceMap],
 
 templateUrl: './notifications.html',
   styleUrl: './notifications.css'
@@ -86,9 +85,17 @@ showTrackSection = false;
         }
         this.trackingDevices = [user];
         console.log('Tracking device added:', user);
-        this.userLatestLocation=user.LatestLocation;
-        console.log('User latest location:', this.userLatestLocation);
-
+        if (user?.User?.deviceInfo?.length) {
+          const device = user.User.deviceInfo[0]; 
+          if (device.location?.length) {
+            const latestLocation = device.location.reduce((latest:any, current:any) => {
+              return new Date(current.timestamp) > new Date(latest.timestamp) ? current : latest;
+            }, device.location[0]);
+        
+            const { latitude, longitude } = latestLocation;
+          
+            this.userLatestLocation = { latitude, longitude };          }
+        }
       },
       error: (err:any) => console.error(err),
       complete: () => console.log('Tracking device replaced')
@@ -104,7 +111,7 @@ goToDevices(){
 
 
 receivedNotification() {
-  this.socket = io('http://localhost:4000');
+  this.socket = io('https://tracking-app-backend-g3al.onrender.com');
 
   this.socket.on('receivedNotification', (data: any) => {
     this.latestNotification.push(data);
@@ -116,5 +123,8 @@ receivedNotification() {
       this.showNotification = false;
     }, 10000);
   });
+}
+showOnMap(){
+  this.router.navigate(['tracked-device-laction'])
 }
 }
