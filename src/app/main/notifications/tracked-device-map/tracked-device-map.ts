@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, AfterViewInit, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Leaflet from 'leaflet';
 import { Location } from '../../interfaces/location';
@@ -10,20 +10,17 @@ import { Location } from '../../interfaces/location';
   templateUrl: './tracked-device-map.html',  
   styleUrls: ['./tracked-device-map.css']
 })
-export class TrackedDeviceMap implements OnChanges {
+export class TrackedDeviceMap implements  OnInit {
   @Input() trackedUserLatestLocation: Location | null = null; 
 
   private map!: Leaflet.Map;
   private currentMarker!: Leaflet.Marker;
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['trackedUserLatestLocation'] && this.trackedUserLatestLocation) {
+  ngOnInit() {
+    if (this.trackedUserLatestLocation) {
       const { latitude, longitude } = this.trackedUserLatestLocation;
-      console.log(`Updated Lat: ${latitude}, Lng: ${longitude}`);
-      if (!this.map) {
-        this.initializeMap(latitude, longitude);
-        this.addTileLayers();
-      }
+      this.initializeMap(latitude, longitude);
+      this.addTileLayers();
       this.showLatestLocation(latitude, longitude);
     }
   }
@@ -69,5 +66,8 @@ export class TrackedDeviceMap implements OnChanges {
     }).addTo(this.map);
 
     this.map.setView([lat, lng], 18);
+  }
+  public updateLocation(location: Location) {
+    this.showLatestLocation(location.latitude, location.longitude);
   }
 }

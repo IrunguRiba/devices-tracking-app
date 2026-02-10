@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: '', component: Home },
   { path: 'auth', component: Auth },
   { path: 'map', component: Map },
-  {path: 'tracked-device-laction', component: TrackedDeviceMap},
+  {path: 'tracked-device-location', component: TrackedDeviceMap},
   { path: 'all-map', component: AllMap },
   { path: 'about', component: About},
   {path: 'sign-in', component: SignIn},

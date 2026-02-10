@@ -114,8 +114,8 @@
           <span class="username">#{{ trackingDevices[0].User.userName }} was last seen at</span>
         </div>
         <div class="location-row">
-          <div class="location-icon-container">
-            <img [src]="locationPic" class="locationPic" alt="Live" (click)="showOnMap()">
+          <div class="location-icon-container" (click)="goToMapClosure && goToMapClosure()">
+            <img [src]="locationPic" class="locationPic" alt="Live">
             <span class="location-text">
               Latitude: {{ userLatestLocation.latitude }} ,  Longitude: {{ userLatestLocation.longitude }}
             </span>
@@ -134,4 +134,4 @@
   
   
 
- <app-tracked-device-map [trackedUserLatestLocation]="userLatestLocation" style="display:none"></app-tracked-device-map>
+ <app-tracked-device-map [trackedUserLatestLocation]="locationForChild" style="display:none"></app-tracked-device-map>

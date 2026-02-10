@@ -34,6 +34,9 @@ userLatestLocation:Location | null=null;
   user!: User;
   location: any;
 sharePic='/share.png';
+locationForChild:Location | null=null;
+goToMapClosure: (() => void) | null = null;
+
 
 showTrackSection = false;
   constructor(private mainService: MainService, private locationService: LocationService, private router:Router) {}
@@ -94,13 +97,28 @@ showTrackSection = false;
         
             const { latitude, longitude } = latestLocation;
           
-            this.userLatestLocation = { latitude, longitude };          }
+            this.userLatestLocation = { latitude, longitude };      
+            
+           
+            this.goToMapClosure = () => {
+              if (!this.userLatestLocation) return;
+              this.locationForChild = this.userLatestLocation;
+              console.log("Location for child", this.locationForChild);
+              setTimeout(()=>{
+                this.router.navigate(['tracked-device-location'])
+              }, 2000)
+            };          
+          
+          }
         }
       },
       error: (err:any) => console.error(err),
       complete: () => console.log('Tracking device replaced')
     });
   }
+
+
+
 
 openAdvancedTracking(){
   this.showTrackSection = !this.showTrackSection;
@@ -124,7 +142,5 @@ receivedNotification() {
     }, 10000);
   });
 }
-showOnMap(){
-  this.router.navigate(['tracked-device-laction'])
-}
+
 }
