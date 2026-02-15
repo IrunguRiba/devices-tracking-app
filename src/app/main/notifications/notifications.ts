@@ -8,11 +8,11 @@ import { LocationService } from './../../map/location-service';
 import { Router } from '@angular/router';
 import {Socket, io} from 'socket.io-client';
 import { NgOtpInputComponent } from 'ng-otp-input';
-import {TrackedDeviceMap} from './tracked-device-map/tracked-device-map'
+
 
 @Component({
   selector: 'app-notifications',
-  imports: [CommonModule, NgOtpInputComponent, TrackedDeviceMap],
+  imports: [CommonModule, NgOtpInputComponent],
 
 templateUrl: './notifications.html',
   styleUrl: './notifications.css'
@@ -79,6 +79,7 @@ showTrackSection = false;
       console.warn('Please enter a valid 6-digit PIN');
       return;
     }
+   
   
     this.mainService.getUserDataByPin(this.pin).subscribe({
       next: (user: any) => {
@@ -99,14 +100,12 @@ showTrackSection = false;
           
             this.userLatestLocation = { latitude, longitude };      
             
-           
+        
             this.goToMapClosure = () => {
               if (!this.userLatestLocation) return;
-              this.locationForChild = this.userLatestLocation;
-              console.log("Location for child", this.locationForChild);
-              setTimeout(()=>{
-                this.router.navigate(['tracked-device-location'])
-              }, 2000)
+              this.router.navigate(['tracked-device-location'], {
+                state: { location: this.userLatestLocation }
+              });              
             };          
           
           }
